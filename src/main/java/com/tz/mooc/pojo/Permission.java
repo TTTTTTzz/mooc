@@ -2,10 +2,7 @@ package com.tz.mooc.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +22,7 @@ public class Permission {
     }
 
     @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "name")
     public String getName() {
         return name;
