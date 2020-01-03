@@ -10,8 +10,15 @@ import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-    UserDAO userDAO;
-    public List<User> list(){
+    @Autowired UserDAO userDAO;
+//    public List<User> list(){
+//    }
+
+    public String createUser(String name, String user){return null;}
+
+    public User getByName(String name){
+        return  userDAO.findByName(name);
     }
+
+
 }
