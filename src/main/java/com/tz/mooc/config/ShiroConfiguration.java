@@ -32,8 +32,12 @@ public class ShiroConfiguration {
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager){
+        //必要过程
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        //必须设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+
         return shiroFilterFactoryBean;
     }
 
