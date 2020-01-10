@@ -1,84 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head th:include="header::html">
+
     <title>Test</title>
-    <script src="./js/jquery.min.js"></script>
+<!--    <script src="./js/jquery.min.js"></script>-->
+<!--    <script src="./js/vue.min.js"></script>-->
+<!--    <script src="./js/axios.min.js"></script>-->
 
-    <script src="./js/vue.min.js"></script>
-    <script src="./js/axios.min.js"></script>
+<!--    &lt;!&ndash;  bootstrap  &ndash;&gt;-->
+<!--    <link href="./css/bootstrap/4.4.1/bootstrap.min.css" rel="stylesheet">-->
+<!--    <script src="./js/bootstrap/4.4.1/bootstrap.min.js"></script>-->
 
-    <!--  bootstrap  -->
-    <link href="./css/bootstrap/4.4.1/bootstrap.min.css" rel="stylesheet">
-    <script src="./js/bootstrap/4.4.1/bootstrap.min.js"></script>
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>-->
+
+
 
     <link href="./css/fore/style.css" rel="stylesheet">
 
 </head>
 
 <body>
-<!--<div class="container">-->
-<!--&lt;!&ndash;    <nav>&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="nav bg-primary">&ndash;&gt;-->
-<!--&lt;!&ndash;        <span class="pull-left">&ndash;&gt;-->
-<!--&lt;!&ndash;            <a href="#">首页</a>&ndash;&gt;-->
-<!--&lt;!&ndash;            <a href="#">课程</a>&ndash;&gt;-->
-
-<!--&lt;!&ndash;        </span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    </nav>&ndash;&gt;-->
-<!--    <div class="row">-->
-<!--        <br>-->
-<!--        <div height="50px" width="200px" class="col-lg-1">-->
-<!--            <a href="#">-->
-<!--                <img src="./img/test.png">-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div class="btn-group col-lg-2">-->
-<!--            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">默认-->
-<!--                <span class="caret"></span>-->
-<!--            </button>-->
-<!--            <ul class="dropdown-menu" role="menu">-->
-<!--                <li>-->
-<!--                    <a href="#">功能</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="#">另一个功能</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a href="#">其他</a>-->
-<!--                </li>-->
-<!--                <li class="divider"></li>-->
-<!--                <li>-->
-<!--                    <a href="#">分离的链接</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+            <!--<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <!--Brand-->
+                    &lt;!&ndash;Brand&ndash;&gt;
                     <img src="./img/logo.png">
                 </a>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="navbar-nav">
-                        <!--<li class="nav-item active">
+                        &lt;!&ndash;<li class="nav-item active">
                             <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
-                        </li>-->
+                        </li>&ndash;&gt;
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">探索</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -91,21 +54,12 @@
 
 
                                 <a class="dropdown-item dropdown-menu-left dropdown-toggle dropright" href="#" id="dropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-<!--                                <div class="">-->
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
                                     </div>
-<!--                                </div>-->
-
-<!--                                </div>-->
                             </div>
-
-
-
-
-
                         </li>
                     </ul>
                     <form class="form-inline">
@@ -131,7 +85,8 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>-->
+            <div th:replace="top::html" ></div>
             <div class="jumbotron">
                 <h2>
                     Hello, world!
