@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="header::html"></head>
+<head th:include="admin/adminHeader::html('学科管理')"></head>
 <body>
 <!--<div th:replace="include/admin/adminNavigator::html" ></div>-->
 <script>
@@ -39,7 +39,7 @@
 
 </script>
 <div id="workingArea" >
-    <h1 class="label label-info" >分类管理</h1>
+    <h1 class="label label-info" >学科管理</h1>
     <br>
     <br>
     <div class="listDataTableDiv">
@@ -75,9 +75,8 @@
             </tr>
             </tbody>
         </table>
-
-        <div th:replace="admin/adminPage::html"></div>
     </div>
+    <div th:replace="admin/adminPage::html"></div>
 </div>
 </body>
 </html>
