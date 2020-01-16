@@ -32,4 +32,8 @@ public class SubjectService {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         return subjectDAO.findAll(sort);
     }
+
+    public void add(Subject bean) {
+        subjectDAO.save(bean);
+    }
 }
