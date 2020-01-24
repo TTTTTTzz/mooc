@@ -5,6 +5,7 @@ import com.tz.mooc.service.SubjectService;
 import com.tz.mooc.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class SubjectController {
         return page;
     }
 
-    @GetMapping("/subjects")
+    @PostMapping("/subjects")
     public Object add(Subject bean, HttpServletRequest request) throws Exception{
         subjectService.add(bean);
         return bean;
