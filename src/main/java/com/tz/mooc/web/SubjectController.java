@@ -32,4 +32,10 @@ public class SubjectController {
         return null;
     }
 
+    @GetMapping("/subjects/{id}")
+    public Subject get(@PathVariable("id") int id) throws Exception {
+        Subject bean=subjectService.get(id);
+        return bean;
+    }
+
 }

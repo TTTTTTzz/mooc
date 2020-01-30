@@ -40,4 +40,9 @@ public class SubjectService {
     public void delete(int id) {
         subjectDAO.delete(id);
     }
+
+    public Subject get(int id) {
+        Subject s = subjectDAO.findOne(id);
+        return s;
+    }
 }

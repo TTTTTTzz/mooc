@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminPageController {
     @GetMapping(value="/admin")
     public String admin(){
-        return "redirect:admin_category_list";
+        return "redirect:admin_subject_list";
     }
-    @GetMapping(value="/admin_category_list")
-    public String listCategory(){
+
+    @GetMapping(value="/admin_subject_list")
+    public String listSubject(){
         return "admin/listSubject";
     }
+
+    @GetMapping(value="/admin_subject_edit")
+    public String editSubject(){ return "admin/editSubject"; }
 }
