@@ -4,10 +4,7 @@ import com.tz.mooc.pojo.Subject;
 import com.tz.mooc.service.SubjectService;
 import com.tz.mooc.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,6 +24,12 @@ public class SubjectController {
     public Object add(Subject bean, HttpServletRequest request) throws Exception{
         subjectService.add(bean);
         return bean;
+    }
+
+    @DeleteMapping("/subjects/{id}")
+    public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
+        subjectService.delete(id);
+        return null;
     }
 
 }

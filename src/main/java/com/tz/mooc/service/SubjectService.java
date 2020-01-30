@@ -36,4 +36,8 @@ public class SubjectService {
     public void add(Subject bean) {
         subjectDAO.save(bean);
     }
+
+    public void delete(int id) {
+        subjectDAO.delete(id);
+    }
 }
