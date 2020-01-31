@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SubjectController {
@@ -33,8 +33,16 @@ public class SubjectController {
     }
 
     @GetMapping("/subjects/{id}")
-    public Subject get(@PathVariable("id") int id) throws Exception {
-        Subject bean=subjectService.get(id);
+    public Optional<Subject> get(@PathVariable("id") int id) throws Exception {
+        return subjectService.get(id);
+    }
+
+    @PutMapping("/subjects/{id}")
+    public Object update(Subject bean, HttpServletRequest request) throws Exception {
+        String name = request.getParameter("name");
+        bean.setName(name);
+        subjectService.update(bean);
+
         return bean;
     }
 

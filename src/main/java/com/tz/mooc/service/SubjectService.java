@@ -3,6 +3,7 @@ package com.tz.mooc.service;
 import com.tz.mooc.dao.SubjectDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.tz.mooc.pojo.Subject;
 import com.tz.mooc.util.Page4Navigator;
@@ -18,18 +19,19 @@ public class SubjectService {
     @Autowired SubjectDAO subjectDAO;
 
     public Page4Navigator<Subject> list(int start, int size,int navigatePages){
-//        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-//        Pageable pageable = PageRequest.of(start, size,sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(start, size,sort);
 
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(start, size,sort);
+        //Sort sort = new Sort(Sort.Direction.DESC, "id");
+        //Pageable pageable = new PageRequest(start, size,sort);
         Page pageFromJPA =subjectDAO.findAll(pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
     public List<Subject> list(){
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        //Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
         return subjectDAO.findAll(sort);
     }
 
@@ -38,11 +40,14 @@ public class SubjectService {
     }
 
     public void delete(int id) {
-        subjectDAO.delete(id);
+        subjectDAO.deleteById(id);
     }
 
-    public Subject get(int id) {
-        Subject s = subjectDAO.findOne(id);
-        return s;
+    public Optional<Subject> get(int id) {
+        return subjectDAO.findById(id);
+    }
+
+    public void update(Subject bean) {
+        subjectDAO.save(bean);
     }
 }
