@@ -9,6 +9,12 @@
 
     <link href="css/custom/style.css"  rel="stylesheet">
     <script>
+        /* change the active nav-tab*/
+        function changeNav(id) {
+            $(".nav li").removeClass("active");//this will remove the active class from previously active menu item
+            $(id).addClass('active');
+        }
+
         //判断是否为空
         function checkEmpty(value,text){
 
