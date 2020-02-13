@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="admin/adminHeader::html('后台管理')"></head>
+
+<body onload="changeNav('#home')">
+<div id="workingArea" class="container-fluid">
+    <div class="row content">
+        <div th:replace="include/plugin/nav::html"></div>
+
+        <br>
+
+        <div class="col-sm-10">
+            <h1>你好，老师，欢迎登陆！</h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>
