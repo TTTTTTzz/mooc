@@ -40,4 +40,16 @@ public class Course {
         this.subject = subject;
     }
 
+    @ManyToOne
+    @JoinColumn(name="tid")
+
+    //todo 安全性 会暴露密码
+    private User teacher;
+
+    public User getUser() {
+        return teacher;
+    }
+    public void setUser(User teacher) {
+        this.teacher = teacher;
+    }
 }

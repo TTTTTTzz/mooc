@@ -37,6 +37,7 @@
                         vue.beans = response.data.content;
                     });
                 },
+                //todo 增加属性‘教师’
                 add: function () {
                     if (!checkEmpty(this.bean.name, "课程名称"))
                         return;
@@ -90,6 +91,8 @@
                     <tr class="success">
                         <th>ID</th>
                         <th>课程名称</th>
+                        <th>任课教师</th>
+                        <th>视频管理</th>
                         <th>编辑</th>
                         <th>删除</th>
                     </tr>
@@ -99,6 +102,12 @@
                         <td>{{bean.id}}</td>
                         <td>
                             {{bean.name}}
+                        </td>
+                        <td v-if="bean.user">
+                            {{bean.user.name}}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-edit"></span>
                         </td>
                         <td>
                             <a :href="'admin_course_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
