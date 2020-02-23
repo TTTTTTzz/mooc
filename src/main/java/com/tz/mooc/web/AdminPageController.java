@@ -23,4 +23,7 @@ public class AdminPageController {
 
     @GetMapping(value="/admin_course_edit")
     public String editCourse(){ return "admin/editCourse"; }
+
+    @GetMapping(value="/admin_video_list")
+    public String listVideo(){ return "admin/oneVideo"; }
 }

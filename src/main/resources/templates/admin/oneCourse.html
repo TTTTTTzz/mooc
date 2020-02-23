@@ -107,14 +107,13 @@
                             {{bean.user.name}}
                         </td>
                         <td>
-                            <span class="glyphicon glyphicon-edit"></span>
+                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span class="glyphicon glyphicon-th-list"></span></a>
                         </td>
                         <td>
                             <a :href="'admin_course_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                         </td>
                         <td>
-                            <a href="#nowhere" @click="deleteBean(bean.id)"><span
-                                    class="   glyphicon glyphicon-trash"></span></a>
+                            <a href="#nowhere" @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                     </tbody>

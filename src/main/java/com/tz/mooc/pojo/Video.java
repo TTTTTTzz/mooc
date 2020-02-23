@@ -36,17 +36,6 @@ public class Video {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "createDate")
-    private Timestamp createDate;
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
     @ManyToOne
     @JoinColumn(name="cid")
 
