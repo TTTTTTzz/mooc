@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="admin/adminHeader::html('后台管理')"></head>
+
+<body onload="changeNav('#course')">
+<script>
+    $(function () {
+        var sid = getUrlParms("sid");
+        var data4Vue = {
+            uri: 'courses',
+            listURL: 'admin_course_list',
+            bean: {id: 0, name: '', subject: {id: 0}, user: {id: 0}},
+            subject: '',
+            teachers: [],
+            selected: 0
+        };
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.get();
+                this.getSubject(sid);
+                this.getTeahcers(2);
+            },
+            methods: {
+                get: function () {
+                    var id = getUrlParms("id");
+                    var url = this.uri + "/" + id;
+                    axios.get(url).then(function (response) {
+                        vue.bean = response.data;
+                    })
+                },
+                getSubject: function (sid) {
+                    var url = "subjects/" + sid;
+                    axios.get(url).then(function (response) {
+                        vue.subject = response.data;
+                    })
+                },
+                getTeahcers: function (rid) {
+                    var url = "users/teachers/" + rid;
+                    axios.get(url).then(function (response) {
+                        vue.teachers = response.data;
+                    })
+                },
+                update: function () {
+                    if (!checkEmpty(this.bean.name, "课程名称"))
+                        return;
+                    var url = this.uri + "/" + this.bean.id;
+                    this.bean.user.id = this.selected;
+                    axios.put(url, this.bean).then(function (response) {
+                        location.href = 'admin_course_list?sid=' + sid;
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div id="workingArea" class="container-fluid">
+
+    <div class="row content">
+        <div th:replace="include/plugin/adminNav::html"></div>
+
+        <br>
+
+        <div class="col-sm-10">
+            <ol class="breadcrumb">
+                <li><a href="admin_subject_list">所有学科</a></li>
+                <li><a :href="'admin_course_list?sid='+subject.id">{{subject.name}}</a></li>
+                <li class="active">编辑课程</li>
+            </ol>
+
+            <div class="panel panel-warning editDiv">
+                <div class="panel-heading">编辑课程</div>
+                <div class="panel-body">
+                    <table class="editTable">
+                        <tr>
+                            <td>课程名称</td>
+                            <td><input @keyup.enter="update" v-model.trim="bean.name" type="text" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>教师名称</td>
+                            <td>
+                                <select @keyup.enter="update" v-model="selected" class="form-control">
+                                    <option v-for="(teacher,index) in teachers" :value="index">
+                                        {{teacher}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="submitTR">
+                            <td colspan="2" align="center">
+                                <input type="hidden" name="id" v-model.trim="bean.id">
+                                <a href="#nowhere" class="btn btn-success" @click="update">提 交</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

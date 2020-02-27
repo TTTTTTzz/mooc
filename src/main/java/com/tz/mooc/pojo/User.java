@@ -7,9 +7,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user")
-@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 public class User {
-    private long id;
+    private int id;
+    private int rid;
     private String name;
     private String password;
     private String salt;
@@ -17,11 +18,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public long getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -30,7 +30,6 @@ public class User {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -40,7 +39,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -50,24 +48,16 @@ public class User {
     public String getSalt() {
         return salt;
     }
-
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(salt, user.salt);
+    @Basic
+    @Column(name = "rid")
+    public int getRid() {
+        return rid;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, password, salt);
+    public void setRid(int rid) {
+        this.rid = rid;
     }
 }

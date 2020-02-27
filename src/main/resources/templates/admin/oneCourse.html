@@ -7,12 +7,15 @@
 <script>
     $(function () {
         var sid = getUrlParms("sid");
+        var tid = 0;
         var data4Vue = {
             uri: 'courses',
             beans: [],
-            bean: {id: 0, name: '', subject: {id: 0}},
+            bean: {id: 0, name: '', subject: {id: 0}, user: {id: 0}},
             pagination: {},
-            subject: ''
+            subject: '',
+            teachers: [],
+            selected: 0
         };
 
         //ViewModel
@@ -21,6 +24,7 @@
             data: data4Vue,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.getSubject(sid);
+                this.getTeahcers(2);
                 this.list(0);
             },
             methods: {
@@ -28,6 +32,12 @@
                     var url = "subjects/" + sid;
                     axios.get(url).then(function (response) {
                         vue.subject = response.data;
+                    })
+                },
+                getTeahcers: function (rid) {
+                    var url = "users/teachers/" + rid;
+                    axios.get(url).then(function (response) {
+                        vue.teachers = response.data;
                     })
                 },
                 list: function (start) {
@@ -39,13 +49,14 @@
                 },
                 //todo 增加属性‘教师’
                 add: function () {
-                    if (!checkEmpty(this.bean.name, "课程名称"))
+                    if (!checkEmpty(this.bean.name, "课程名称") || !checkEmpty(this.bean.user, "教师名称"))
                         return;
                     var url = this.uri;
                     this.bean.subject.id = sid;
+                    this.bean.user.id = this.selected;
                     axios.post(url, this.bean).then(function (response) {
                         vue.list(0);
-                        vue.bean = {id: 0, name: '', subject: {id: 0}};
+                        vue.bean = {id: 0, name: '', subject: {id: 0}, teacher: {id: 0}};
                     });
                 },
                 deleteBean: function (id) {
@@ -107,13 +118,15 @@
                             {{bean.user.name}}
                         </td>
                         <td>
-                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span class="glyphicon glyphicon-th-list"></span></a>
+                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span
+                                    class="glyphicon glyphicon-th-list"></span></a>
                         </td>
                         <td>
-                            <a :href="'admin_course_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
+                            <a :href="'admin_course_edit?id=' + bean.id + '&sid=' + subject.id"><span class="glyphicon glyphicon-edit"></span></a>
                         </td>
                         <td>
-                            <a href="#nowhere" @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
+                            <a href="#nowhere" @click="deleteBean(bean.id)"><span
+                                    class="   glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -128,7 +141,17 @@
                     <table class="addTable">
                         <tr>
                             <td>课程名称</td>
-                            <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control">
+                            <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>教师名称</td>
+                            <td>
+                                <select @keyup.enter="add" v-model="selected" class="form-control">
+                                    <option v-for="(teacher,index) in teachers" :value="index">
+                                        {{teacher}}
+                                    </option>
+                                </select>
                             </td>
                         </tr>
                         <tr class="submitTR">

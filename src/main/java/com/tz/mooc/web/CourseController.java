@@ -38,8 +38,8 @@ public class CourseController {
         return null;
     }
 
-    @PutMapping("/courses")
-    public Object update(@RequestBody Course bean) throws Exception {
+    @PutMapping("/courses/{id}")
+    public Object update(@PathVariable("id") int id,@RequestBody Course bean) throws Exception {
         courseService.update(bean);
         return bean;
     }
