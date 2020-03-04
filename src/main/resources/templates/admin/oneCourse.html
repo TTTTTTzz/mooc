@@ -47,7 +47,6 @@
                         vue.beans = response.data.content;
                     });
                 },
-                //todo 增加属性‘教师’
                 add: function () {
                     if (!checkEmpty(this.bean.name, "课程名称") || !checkEmpty(this.bean.user, "教师名称"))
                         return;

@@ -8,17 +8,17 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Role {
-    private long id;
+    private int id;
     private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

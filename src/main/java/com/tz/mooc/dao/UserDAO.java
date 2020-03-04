@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public interface UserDAO extends JpaRepository<User,Integer> {
-    User findByName(String name);
-
     ArrayList<User> findAllByRid(int rid);
+
+    int findRidById(int id);
+    Optional<User> findById(int id);
+
+    Optional<User> findByEmail(String email);
+
 }

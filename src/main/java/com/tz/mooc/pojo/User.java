@@ -14,6 +14,7 @@ public class User {
     private String name;
     private String password;
     private String salt;
+    private String email;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,15 @@ public class User {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "email")
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Basic

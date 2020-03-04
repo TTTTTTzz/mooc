@@ -73,20 +73,57 @@
 
 </head>
 <body class="text-center">
-<form class="form-signin">
-    <img src="img/logo.png" alt="" width="100%" height="100%">
-    <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me">记住我
-        </label>
-    </div>
-    <br>
-    <button class="btn btn-lg btn-success btn-block" type="submit">登 录</button>
-</form>
+<script>
+    $(function () {
+        var data4Vue = {
+            bean: {email: '', password: ''}
+        };
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+
+            },
+            methods: {
+                login: function () {
+                    axios.post('homelogin',this.bean).then(function(response) {
+                        var result = response.data;
+                        if(result.data==1){
+                            location.href="/admin";
+                        }else if(result.data==2){
+                            location.href="/teacher";
+                        }
+                        else{
+                            $("span.errorMessage").html(result.message);
+                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                        }
+                    });
+
+                }
+            }
+
+        });
+    });
+</script>
+<div id="workingArea" class="container-fluid">
+    <form class="form-signin">
+        <img src="img/logo.png" alt="" width="100%" height="100%">
+        <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+        <label for="inputemail" class="sr-only">Email address</label>
+        <input @keyup.enter="login" v-model.trim="bean.email" type="text" id="inputemail" class="form-control" placeholder="Email Address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input @keyup.enter="login" v-model.trim="bean.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me">记住我
+            </label>
+        </div>
+        <br>
+        <button class="btn btn-lg btn-success btn-block" @click="login" type="button">登 录</button>
+    </form>
+</div>
+
 </body>
 </html>

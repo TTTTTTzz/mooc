@@ -21,7 +21,7 @@ public class SubjectController {
     }
 
     @PostMapping("/subjects")
-    public Object add(Subject bean, HttpServletRequest request) throws Exception{
+    public Object add(@RequestBody Subject bean, HttpServletRequest request) throws Exception{
         subjectService.add(bean);
         return bean;
     }
@@ -38,11 +38,8 @@ public class SubjectController {
     }
 
     @PutMapping("/subjects/{id}")
-    public Object update(Subject bean, HttpServletRequest request) throws Exception {
-        String name = request.getParameter("name");
-        bean.setName(name);
+    public Object update(@RequestBody Subject bean, HttpServletRequest request) throws Exception {
         subjectService.update(bean);
-
         return bean;
     }
 
