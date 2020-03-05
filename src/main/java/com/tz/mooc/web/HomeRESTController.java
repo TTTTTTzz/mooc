@@ -37,10 +37,14 @@ public class HomeRESTController { //后台管理的登陆
         AuthenticationToken token = new JwtToken(JWTUtil.encode(String.valueOf(bean.getId())));
         try {
             subject.login(token);
+            //成功登陆 //todo test 不存在的账号
             User user = userService.getByEmail(email);
-            session.setAttribute("user", user);
-            int role_code = user.getRid();
-            return Result.success(role_code);
+            User temp = new User();
+            temp.setEmail(user.getEmail());
+            temp.setName(user.getName());
+            temp.setRid(user.getRid());
+            session.setAttribute("token", token); //todo
+            return Result.success(temp);
         } catch (AuthenticationException e) {
             String message = "账号密码错误";
             return Result.fail(message);

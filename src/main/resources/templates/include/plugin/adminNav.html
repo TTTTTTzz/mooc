@@ -1,9 +1,17 @@
-<div class="col-sm-2 sidenav hidden-xs" th:fragment="html">
+<div class="col-sm-2 sidenav" th:fragment="html">
     <img src="./img/logo.png">
-    <ul class="nav nav-pills nav-stacked">
-        <li id="home"><a href="admin">管理员管理</a></li>
-        <li id="sub"><a href="admin_subject_list">学科管理</a></li>
-        <li id="course"><a href="#section3">课程管理</a></li>
-        <li id="video"><a href="#section3">视频管理</a></li>
-    </ul><br>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-white bg-success"  id="home" href="admin">管理员管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary"  id="sub" href="admin_subject_list">学科管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary" id="course" href="#section3">课程管理</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-secondary" id="video" href="#section3">视频管理</a>
+        </li>
+    </ul>
 </div>
