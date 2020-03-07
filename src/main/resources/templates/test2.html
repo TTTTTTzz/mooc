@@ -4,7 +4,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
     <div class="col-1"></div>
-        <a class="navbar-brand" href="#">MOOC</a>
+        <a class="navbar-brand" href="#" style="margin-left: 4rem">MOOC</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,22 +12,18 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">发现</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <div class="dropdown-item dropdown">
+                        <div class="dropdown-content-recommend">
                             <a class="">test</a>
-                            <div class="dropdown-menu">
+                            <div class="recommend-item">
                                 <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
                             </div>
                         </div>
                         <a class="dropdown-item" href="#">Action</a>
@@ -37,11 +33,12 @@
                 </li>
                 <li class="nav-item">
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+                        <input class="form-control mr-sm-2" style="margin-left: 20rem" type="text" placeholder="今天你想学习什么？" aria-label="Search">
+                        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">搜索</button>
                     </form>
                 </li>
             </ul>
+            <img width="20px" height="20px" src="./img/User_Avatar-512.png" style="margin-right: 4rem">
             <div class="col-1"></div>
         </div>
     </div>
@@ -51,17 +48,18 @@
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-image: url("./img/QQ图片20200307155218.jpg")">
         <div class="container row">
             <div class="col-2"></div>
             <div class="col-7">
+                <br>
                 <h2 class="display-5">在 MOOC，学习技能、解决问题</h2>
                 <p>随便说说的。每个月，我们帮助 1000 万的开发者解决各种各样的技术问题。并助力他们在技术能力、职业生涯、影响力上获得提升。</p>
             </div>
-            <div class="col-3" align="right">
-                <br><br>
+            <div>
+                <br><br><br>
                 <p>
-                    <a class="btn btn-normal" href="#" role="button">免费注册</a>
+                    <a class="btn btn-normal" style="margin-left: 5.5rem" href="#" role="button">免费注册</a>
                     <a class="btn btn-normal" href="#" role="button">立即登录</a>
                 </p>
             </div>
@@ -71,10 +69,11 @@
     <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-            <div class="col-md-4 card">
+            <div class="col-md-4 card"   >
 
                 <h2>Heading</h2>
                 <div class="card-body">
+                    <div style="background-image: url('./img/QQ图片20200307152313.jpg');width: 100%;height: 30%"></div>
                     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                     <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
                 </div>

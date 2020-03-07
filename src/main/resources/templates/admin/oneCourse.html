@@ -116,15 +116,13 @@
                             {{bean.user.name}}
                         </td>
                         <td>
-                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span
-                                    class="glyphicon glyphicon-th-list"></span></a>
+                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span class="fa fa-list"></span></a>
                         </td>
                         <td>
-                            <a :href="'admin_course_edit?id=' + bean.id + '&sid=' + subject.id"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a :href="'admin_course_edit?id=' + bean.id + '&sid=' + subject.id"><span class="fa fa-edit"></span></a>
                         </td>
                         <td>
-                            <a href="#nowhere" @click="deleteBean(bean.id)"><span
-                                    class="   glyphicon glyphicon-trash"></span></a>
+                            <a href="#nowhere" @click="deleteBean(bean.id)"><span class="fa fa-trash"></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -133,13 +131,14 @@
 
             <div th:replace="admin/adminPage::html"></div>
 
-            <div class="panel panel-warning addDiv">
-                <div class="panel-heading">新增课程</div>
-                <div class="panel-body">
+            <div class="card addDiv">
+                <div class="card-header bg-yellow text-white">新增课程</div>
+                <div class="card-body">
                     <table class="addTable">
                         <tr>
                             <td>课程名称</td>
-                            <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control" placeholder="">
+                            <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"
+                                       placeholder="">
                             </td>
                         </tr>
                         <tr>
@@ -154,7 +153,7 @@
                         </tr>
                         <tr class="submitTR">
                             <td colspan="2" align="center">
-                                <a href="#nowhere" @click="add" class="btn btn-success">提交</a>
+                                <a href="#nowhere" @click="add" class="btn btn-outline-warning">提交</a>
                             </td>
                         </tr>
                     </table>

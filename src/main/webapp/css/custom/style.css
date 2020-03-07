@@ -10,6 +10,43 @@
     margin-top: 10px;
 }
 
+.bg-yellow{
+    background-color: #e0bd2a;
+}
+
+
+.dropdown-content-menu {
+    float: left;
+    top: 0;
+    left: 0;
+    min-width: 120px;
+    padding: 5px 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background-color: #fafafa;
+    border-radius: 4px;
+}
+
+.recommend-item {
+    line-height: 1.5;
+    margin-bottom: 10px;
+    min-width: 240px;
+}
+.dropdown-content-recommend {
+    position: relative;
+    padding: 15px 20px 30px;
+    margin-left: 200px;
+    min-height: 280px;
+    max-width: 280px;
+    border-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    box-shadow: -1px 0px 0 0 #eee;
+}
+
 /*悬停显示*/
 .navbar-nav .dropdown:hover>.dropdown-menu {
     display: block;
