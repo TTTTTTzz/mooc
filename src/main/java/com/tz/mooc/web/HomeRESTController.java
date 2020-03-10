@@ -43,6 +43,7 @@ public class HomeRESTController { //后台管理的登陆
             temp.setEmail(user.getEmail());
             temp.setName(user.getName());
             temp.setRid(user.getRid());
+            temp.setId(user.getId());
             session.setAttribute("token", token); //todo
             return Result.success(temp);
         } catch (AuthenticationException e) {

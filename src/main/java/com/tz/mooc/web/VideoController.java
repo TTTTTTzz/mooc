@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 public class VideoController {
     @Autowired
     VideoService videoService;
+    @GetMapping("videos/{tid}/all")
+    public Page4Navigator<Video> listByTeacher(@PathVariable("tid") int tid, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
+        start = start<0?0:start;
+        Page4Navigator<Video> page =videoService.listByTeacher(tid, start, size,5);
+        return page;
+    }
 
     @GetMapping("/courses/{cid}/videos")
     public Page4Navigator<Video> list(@PathVariable("cid") int cid, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {

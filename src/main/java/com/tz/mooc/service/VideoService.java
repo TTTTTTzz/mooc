@@ -8,12 +8,11 @@ import com.tz.mooc.pojo.Subject;
 import com.tz.mooc.pojo.Video;
 import com.tz.mooc.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +36,27 @@ public class VideoService  {
 
     public void update(Video bean){
         videoDAO.save(bean);
+    }
+
+    public Page4Navigator<Video> listByTeacher(int tid, int start, int size, int navigatePages) {
+        //Course course = courseService.get(cid).get();
+        List<Course> courseByTeacher = courseService.listByTeacher(tid);
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(start, size,sort);
+        List<Video> videos = new ArrayList<>();//videoDAO.findVideosByCourse(courseByTeacher);
+        for (Course course: courseByTeacher) {
+            List<Video> list = videoDAO.findVideosByCourse(course);
+            videos.addAll(list);
+            //videos.add(list);
+        }
+
+
+        Page<Video> pageFromJPA = new PageImpl<Video>(videos, pageable, videos.size());
+
+        //Page<Video> pageFromJPA =videoDAO.findVideosByCourse(courseByTeacher);
+
+        return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
     public Page4Navigator<Video> list(int cid, int start, int size, int navigatePages) {

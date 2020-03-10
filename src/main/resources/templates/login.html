@@ -43,11 +43,13 @@
                         var temp = response.data.data;
                         if (temp.rid == 1) {
                             sessionStorage.setItem('username',temp.name);
-                            sessionStorage.setItem('useremail',temp.email);
+                            sessionStorage.setItem('userEmail',temp.email);
                             location.href = "/admin";
                         } else if (temp.rid == 2) {
                             sessionStorage.setItem('username',temp.name);
-                            sessionStorage.setItem('useremail',temp.email);
+                            sessionStorage.setItem('userEmail',temp.email);
+                            sessionStorage.setItem('userRid',temp.rid);
+                            sessionStorage.setItem('userId',temp.id);
                             location.href = "/teacher";
                         } else {
                             $("span.errorMessage").html(result.message);

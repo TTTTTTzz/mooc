@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,9 +69,14 @@ public class CourseService {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(start, size,sort);
 
-        Page<Course> pageFromJPA =courseDAO.findByUser(teacher,pageable);
+        Page<Course> pageFromJPA =courseDAO.findAllByUser(teacher,pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
+    }
+
+    public List<Course> listByTeacher(int tid){
+        User teacher = userService.get(tid).get();
+        return courseDAO.findAllByUser(teacher);
     }
 
 }

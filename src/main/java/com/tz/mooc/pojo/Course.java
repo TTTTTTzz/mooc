@@ -44,12 +44,12 @@ public class Course {
     @JoinColumn(name="tid")
 
     //todo 安全性 会暴露密码
-    private User teacher;
+    private User user;
 
     public User getUser() {
-        return teacher;
+        return user;
     }
     public void setUser(User teacher) {
-        this.teacher = teacher;
+        this.user = user;
     }
 }

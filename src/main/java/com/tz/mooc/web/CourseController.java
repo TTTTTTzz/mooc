@@ -28,6 +28,12 @@ public class CourseController {
         return page;
     }
 
+    @GetMapping("/courses/all/{tid}")
+    public Page4Navigator<Course> listByTid(@PathVariable("tid") int tid,@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
+        Page4Navigator<Course> page =courseService.listByTeacher(tid,start, size,5);
+        return page;
+    }
+
     @GetMapping("/courses/{id}")
     public Optional<Course> get(@PathVariable("id") int id) throws Exception {
         Optional<Course> bean=courseService.get(id);
