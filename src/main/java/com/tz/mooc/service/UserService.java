@@ -30,7 +30,7 @@ public class UserService {
     public Map<Integer,String> getByRole(int rid){
         ArrayList<User> teacher = userDAO.findAllByRid(rid);
         Map<Integer,String> namelist = new HashMap<>();
-            for (User one:teacher) {
+        for (User one:teacher) {
             namelist.put(one.getId(),one.getName());
         }
         return namelist;

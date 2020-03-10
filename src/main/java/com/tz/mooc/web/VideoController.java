@@ -20,6 +20,13 @@ public class VideoController {
         return page;
     }
 
+    @GetMapping("videos/all")
+    public Page4Navigator<Video> list(@RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "5") int size) throws Exception {
+        start = start<0?0:start;
+        Page4Navigator<Video> page =videoService.list(start, size,5);
+        return page;
+    }
+
     @DeleteMapping("/videos/{id}")
     public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
         videoService.delete(id);

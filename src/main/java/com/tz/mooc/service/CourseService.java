@@ -32,6 +32,8 @@ public class CourseService {
         return courseDAO.findById(id);
     }
 
+    public Optional<Course> getBySubject(int sid){return courseDAO.findAllBySubject(subjectService.get(sid).get());}
+
     public void update(Course bean){
         courseDAO.save(bean);
     }
@@ -47,6 +49,15 @@ public class CourseService {
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
 
+    }
+
+    public Page4Navigator<Course> list(int start, int size, int navigatePages){
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(start, size,sort);
+
+        Page<Course> pageFromJPA =courseDAO.findAll(pageable);
+
+        return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
     //todo

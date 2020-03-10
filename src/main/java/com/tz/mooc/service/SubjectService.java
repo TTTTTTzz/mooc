@@ -2,8 +2,7 @@ package com.tz.mooc.service;
 
 import com.tz.mooc.dao.SubjectDAO;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.tz.mooc.pojo.Subject;
 import com.tz.mooc.util.Page4Navigator;
@@ -29,10 +28,13 @@ public class SubjectService {
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
 
-    public List<Subject> list(){
-        //Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        return subjectDAO.findAll(sort);
+    public Map<Integer,String> list(){
+        List<Subject> subjects = subjectDAO.findAll();
+        Map<Integer,String> namelist = new HashMap<>();
+        for (Subject one: subjects) {
+            namelist.put(one.getId(),one.getName());
+        }
+        return namelist;
     }
 
     public void add(Subject bean) {

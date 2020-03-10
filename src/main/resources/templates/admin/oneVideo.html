@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="admin/adminHeader::html('后台管理')"></head>
+<head th:include="admin/adminHeader::html('后台管理')">
+    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet"/>
 
-<body onload="changeNav('#sub')">
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+</head>
+
+<body onload="changeNav('#video')">
 <script>
     $(function () {
         var sid = getUrlParms("sid");
@@ -62,10 +67,14 @@
                 },
                 jumpByNumber: function (start) {
                     jumpByNumber(start, vue);
+                },
+                closeVideo: function () {
+                    document.getElementById('myVideo').pause(); //利用js获取id
                 }
             }
 
         });
+
     });
 
 </script>
@@ -73,12 +82,19 @@
 <div id="workingArea" class="container-fluid">
     <div class="row content">
         <div th:replace="include/plugin/adminNav::html"></div>
+        <div th:replace="include/plugin/videoModal::html"></div>
 
         <div class="col-sm-10">
             <br>
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" v-if="subject.name">
                 <li class="breadcrumb-item"><a href="admin_subject_list">所有学科</a></li>
                 <li class="breadcrumb-item"><a :href="'admin_course_list?sid='+subject.id">{{subject.name}}</a></li>
+                <li class="breadcrumb-item"><a :href="'admin_video_list?sid=' + subject.id+'&cid='+course.id">{{course.name}}</a></li>
+                <li class="breadcrumb-item active">视频管理</li>
+            </ol>
+
+            <ol class="breadcrumb" v-else>
+                <li class="breadcrumb-item"><a href="admin_course_all">所有课程</a></li>
                 <li class="breadcrumb-item"><a :href="'admin_video_list?sid=' + subject.id+'&cid='+course.id">{{course.name}}</a></li>
                 <li class="breadcrumb-item active">视频管理</li>
             </ol>
@@ -89,6 +105,7 @@
                     <tr class="success">
                         <th>ID</th>
                         <th>视频名称</th>
+                        <td>播放</td>
                         <th>删除</th>
                     </tr>
                     </thead>
@@ -97,6 +114,9 @@
                         <td>{{bean.id}}</td>
                         <td>
                             {{bean.name}}
+                        </td>
+                        <td>
+                            <a type="button" data-toggle="modal" data-target="#myModal" href="#nowhere"><span class="fa fa-play"></span></a>
                         </td>
                         <td>
                             <a href="#nowhere" @click="deleteBean(bean.id)"><span class="fa fa-trash"></span></a>

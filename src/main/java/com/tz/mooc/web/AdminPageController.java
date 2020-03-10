@@ -18,11 +18,21 @@ public class AdminPageController {
     @GetMapping(value="/admin_subject_edit")
     public String editSubject(){ return "admin/editSubject"; }
 
+    @GetMapping(value = "/admin_course_all")
+    public String allCourse(){
+        return "admin/listCourse";
+    }
+
     @GetMapping(value="/admin_course_list")
     public String listCourse(){ return "admin/oneCourse"; }
 
     @GetMapping(value="/admin_course_edit")
     public String editCourse(){ return "admin/editCourse"; }
+
+    @GetMapping(value = "/admin_video_all")
+    public String allVideo(){
+        return "admin/listVideo";
+    }
 
     @GetMapping(value="/admin_video_list")
     public String listVideo(){ return "admin/oneVideo"; }

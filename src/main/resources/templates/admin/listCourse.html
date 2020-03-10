@@ -4,9 +4,9 @@
 <head th:include="admin/adminHeader::html('后台管理')"></head>
 
 <body onload="changeNav('#course')">
+
 <script>
     $(function () {
-        var sid = getUrlParms("sid");
         var tid = 0;
         var data4Vue = {
             uri: 'courses',
@@ -15,7 +15,9 @@
             pagination: {},
             subject: '',
             teachers: [],
-            selected: ''
+            subjects:[],
+            selectedTeacher: '',
+            selectedSubject: ''
         };
 
         //ViewModel
@@ -23,8 +25,9 @@
             el: '#workingArea',
             data: data4Vue,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
-                this.getSubject(sid);
+                //this.getSubject(sid);
                 this.getTeahcers(2);
+                this.getSubjects();
                 this.list(0);
             },
             methods: {
@@ -40,19 +43,25 @@
                         vue.teachers = response.data;
                     })
                 },
+                getSubjects: function(){
+                    var url = "subjects/all";
+                    axios.get(url).then(function (response) {
+                        vue.subjects = response.data;
+                    })
+                },
                 list: function (start) {
-                    var url = "subjects/" + sid + "/" + this.uri + "?start=" + start;
+                    var url = "courses/all" + "?start=" + start;
                     axios.get(url).then(function (response) {
                         vue.pagination = response.data;
                         vue.beans = response.data.content;
                     });
                 },
                 add: function () {
-                    if (!checkEmpty(this.bean.name, "课程名称") || !checkEmpty(this.selected, "教师名称"))
+                    if (!checkEmpty(this.bean.name, "课程名称") || !checkEmpty(this.selectedSubject, "所属学科") || !checkEmpty(this.selectedTeacher, "教师名称"))
                         return;
                     var url = this.uri;
-                    this.bean.subject.id = sid;
-                    this.bean.user.id = this.selected;
+                    this.bean.subject.id = this.selectedSubject;
+                    this.bean.user.id = this.selectedTeacher;
                     axios.post(url, this.bean).then(function (response) {
                         vue.list(0);
                         vue.bean = {id: 0, name: '', subject: {id: 0}, teacher: {id: 0}};
@@ -86,14 +95,11 @@
     <div class="row content">
         <div th:replace="include/plugin/adminNav::html"></div>
 
+
         <div class="col-sm-10">
             <br>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="admin_subject_list">所有学科</a></li>
-                <li class="breadcrumb-item"><a :href="'admin_course_list?sid='+subject.id">{{subject.name}}</a></li>
-                <li class="breadcrumb-item active">课程管理</li>
-            </ol>
-
+            <h1>课程管理</h1>
+            <br>
             <div class="listDataTableDiv">
                 <table class="table table-striped table-bordered table-hover  table-condensed">
                     <thead>
@@ -116,10 +122,10 @@
                             {{bean.user.name}}
                         </td>
                         <td>
-                            <a :href="'admin_video_list?sid=' + subject.id + '&cid=' + bean.id"><span class="fa fa-list"></span></a>
+                            <a :href="'admin_video_list?sid=' + bean.rid + '&cid=' + bean.id"><span class="fa fa-list"></span></a>
                         </td>
                         <td>
-                            <a :href="'admin_course_edit?id=' + bean.id + '&sid=' + subject.id"><span class="fa fa-edit"></span></a>
+                            <a :href="'admin_course_edit?id=' + bean.id + '&sid=' + bean.rid"><span class="fa fa-edit"></span></a>
                         </td>
                         <td>
                             <a href="#nowhere" @click="deleteBean(bean.id)"><span class="fa fa-trash"></span></a>
@@ -128,9 +134,7 @@
                     </tbody>
                 </table>
             </div>
-
             <div th:replace="admin/adminPage::html"></div>
-
             <div class="card addDiv">
                 <div class="card-header bg-yellow text-white">新增课程</div>
                 <div class="card-body">
@@ -142,9 +146,19 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>所属学科</td>
+                            <td>
+                                <select @keyup.enter="add" v-model="selectedSubject" class="form-control">
+                                    <option v-for="(subject,index) in subjects" :value="index">
+                                        {{subject}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>教师名称</td>
                             <td>
-                                <select @keyup.enter="add" v-model="selected" class="form-control">
+                                <select @keyup.enter="add" v-model="selectedTeacher" class="form-control">
                                     <option v-for="(teacher,index) in teachers" :value="index">
                                         {{teacher}}
                                     </option>

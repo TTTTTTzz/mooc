@@ -1,0 +1,16 @@
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="videoPlayModal" aria-hidden="true" th:fragment="html">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeVideo">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <video id="myVideo" controls="" style="width :100%;height:100%;object-fit:fill" class="video_link">
+                    <source src="./video/test.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,6 +33,8 @@ public class VideoService  {
         return videoDAO.findById(id);
     }
 
+    public Optional<Video> getByCourse(int cid){return  videoDAO.findAllByCourse(courseService.get(cid).get());}
+
     public void update(Video bean){
         videoDAO.save(bean);
     }
@@ -44,6 +46,15 @@ public class VideoService  {
         Pageable pageable = PageRequest.of(start, size,sort);
 
         Page<Video> pageFromJPA =videoDAO.findByCourse(course,pageable);
+
+        return new Page4Navigator<>(pageFromJPA,navigatePages);
+    }
+
+    public Page4Navigator<Video> list(int start, int size, int navigatePages) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(start, size,sort);
+
+        Page<Video> pageFromJPA =videoDAO.findAll(pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
     }
