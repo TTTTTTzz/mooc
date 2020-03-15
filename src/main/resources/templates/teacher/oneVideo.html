@@ -18,7 +18,8 @@
             bean: {id: 0, name: '', course :{id:0}},
             pagination: {},
             course:'',
-            videoFile:null
+            videoFile:null,
+            currentAddress:''
         };
 
         //ViewModel
@@ -82,6 +83,11 @@
                 },
                 closeVideo: function () {
                     document.getElementById('myVideo').pause(); //利用js获取id
+                },
+                changeVideoAddress:function (address) {
+                    this.currentAddress = address;
+                    document.getElementById('address').setAttribute("src",this.currentAddress);
+                    document.getElementById('myVideo').load();
                 }
             }
 
@@ -121,7 +127,7 @@
                             {{bean.name}}
                         </td>
                         <td>
-                            <a type="button" data-toggle="modal" data-target="#myModal" href="#nowhere"><span class="fa fa-play"></span></a>
+                            <a type="button" data-toggle="modal" data-target="#myModal" href="#nowhere" @click="changeVideoAddress(bean.address)"><span class="fa fa-play"></span></a>
                         </td>
                         <td>
                             <a href="#nowhere" @click="deleteBean(bean.id)"><span class="fa fa-trash"></span></a>

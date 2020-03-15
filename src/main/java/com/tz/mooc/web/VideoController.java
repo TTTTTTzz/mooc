@@ -22,7 +22,7 @@ public class VideoController {
     @PostMapping("/videos")
     public Object add(Video bean,MultipartFile videoFile, HttpServletRequest request) throws Exception {
         videoService.add(bean);
-        bean.setAddress(request.getServletContext().getRealPath("video/")+bean.getId()+".mp4");
+        bean.setAddress("./video/"+bean.getId()+".mp4");
         videoService.update(bean);
         saveOrUpdateImageFile(bean, videoFile, request);
         return bean;
