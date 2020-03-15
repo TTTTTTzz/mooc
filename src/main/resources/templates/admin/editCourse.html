@@ -66,9 +66,13 @@
 
         <div class="col-sm-10">
             <br>
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" v-if="subject.name">
                 <li class="breadcrumb-item"><a href="admin_subject_list">所有学科</a></li>
                 <li class="breadcrumb-item"><a :href="'admin_course_list?sid='+subject.id">{{subject.name}}</a></li>
+                <li class="breadcrumb-item active">编辑课程</li>
+            </ol>
+            <ol class="breadcrumb" v-else>
+                <li class="breadcrumb-item"><a href="/admin_course_all">所有课程</a></li>
                 <li class="breadcrumb-item active">编辑课程</li>
             </ol>
 

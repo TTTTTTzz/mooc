@@ -11,15 +11,14 @@
 <body onload="changeNav('#video')">
 <script>
     $(function () {
-        var sid = getUrlParms("sid");
         var cid = getUrlParms("cid");
         var data4Vue = {
             uri: 'videos',
             beans: [],
-            bean: {id: 0, name: '', subject: {id: 0}, course: {id: 0}},
+            bean: {id: 0, name: '', course :{id:0}},
             pagination: {},
-            subject: '',
-            course:''
+            course:'',
+            videoFile:null
         };
 
         //ViewModel
@@ -27,17 +26,10 @@
             el: '#workingArea',
             data: data4Vue,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
-                this.getSubject(sid);
                 this.getCourse(cid);
                 this.list(0);
             },
             methods: {
-                getSubject: function (sid) {
-                    var url = "subjects/" + sid;
-                    axios.get(url).then(function (response) {
-                        vue.subject = response.data;
-                    })
-                },
                 getCourse: function (cid) {
                     var url = "courses/" + cid;
                     axios.get(url).then(function (response) {
@@ -51,6 +43,23 @@
                         vue.beans = response.data.content;
                     });
                 },
+                add: function () {
+                    if (!checkEmpty(this.bean.name, "课程名称") || !checkEmpty(this.videoFile, "视频内容"))
+                        return;
+                    var url = this.uri;
+                    this.bean.course=this.course;
+
+                    var formData = new FormData();
+                    formData.append("videoFile", this.videoFile);
+                    formData.append("name", this.bean.name);
+                    formData.append("course",this.bean.course.id);
+                    axios.post(url,formData).then(function (response) {
+                        vue.list(0);
+                        vue.bean = {id: 0, name: '', cid: 0};
+                        $("#uploadVideo").val('');
+                        vue.file = null;
+                    });
+                },
                 deleteBean: function (id) {
                     if (!checkDeleteLink())
                         return;
@@ -61,6 +70,9 @@
                         else
                             vue.list(0);
                     });
+                },
+                getFile: function (event) {
+                    this.videoFile = event.target.files[0];
                 },
                 jump: function (page) {
                     jump(page, vue); //定义在adminHeader.html 中
@@ -88,7 +100,7 @@
             <br>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="teacher_course_list">所有课程</a></li>
-                <li class="breadcrumb-item"><a :href="'teacher_video_list?sid=' + subject.id+'&cid='+course.id">{{course.name}}</a></li>
+                <li class="breadcrumb-item"><a :href="'teacher_video_list?cid='+course.id">{{course.name}}</a></li>
                 <li class="breadcrumb-item active">视频管理</li>
             </ol>
 
@@ -118,8 +130,31 @@
                     </tbody>
                 </table>
             </div>
-
             <div th:replace="admin/adminPage::html"></div>
+            <div class="card addDiv">
+                <div class="card-header bg-yellow text-white">新增视频</div>
+                <div class="card-body">
+                    <table class="addTable">
+                        <tr>
+                            <td>视频名称</td>
+                            <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"
+                                       placeholder="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>上传视频</td>
+                            <td>
+                                <input id="videoFile" accept="video/*" type="file" name="uploadVideo" @change="getFile($event)" />
+                            </td>
+                        </tr>
+                        <tr class="submitTR">
+                            <td colspan="2" align="center">
+                                <a href="#nowhere" @click="add" class="btn btn-outline-warning">提交</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
 
         </div>

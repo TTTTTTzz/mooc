@@ -45,5 +45,15 @@ public class Video {
 
     public void setCourse(Course course) { this.course = course; }
 
+    @Basic
+    @Column(name = "address")
+    private String address;
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
