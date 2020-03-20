@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" th:fragment="html">
+    <div class="col-1"></div>
+    <a class="navbar-brand" href="#" style="margin-left: 3rem">MOOC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">发现</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <div id="subjectList" style="width: 200px;position: absolute;float: left">
+                        <a class="dropdown-item" href="#">音乐与艺术</a>
+                        <a class="dropdown-item" href="#">计算机科学</a>
+                        <a class="dropdown-item" href="#">哲学</a>
+                    </div>
+                    <div id="courseList" class="dropdown-content-recommend">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Action</a>
+                    </div>
+
+
+                </div>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" style="margin-left: 20rem" type="text" placeholder="今天你想学习什么？"
+                           aria-label="Search">
+                    <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">搜索</button>
+                </form>
+            </li>
+        </ul>
+        <img width="20px" height="20px" src="./img/User_Avatar-512.png" style="margin-right: 4rem">
+        <div class="col-1"></div>
+    </div>
+    </div>
+
+</nav>

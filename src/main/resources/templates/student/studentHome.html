@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="admin/adminHeader::html('MOOC')"></head>
+
+<body>
+<script>
+    $(function(){
+        var data4Vue = {
+            name:''
+        };
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            }
+        });
+    });
+</script>
+<div th:replace="include/plugin/studentNav::html"></div>
+<div th:replace="include/plugin/loginModal::html"></div>
+<div th:replace="include/plugin/registerModal::html"></div>
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="background-image: url("./img/QQ图片20200307155218.jpg")">
+    <div class="container row">
+        <div class="col-2"></div>
+        <div class="col-7">
+            <br>
+            <h2 class="display-5">在 MOOC，学习技能、解决问题</h2>
+            <p>随便说说的。每个月，我们帮助 1000 万的开发者解决各种各样的技术问题。并助力他们在技术能力、职业生涯、影响力上获得提升。</p>
+        </div>
+        <div>
+            <br><br><br>
+            <p>
+                <a class="btn btn-normal" style="margin-left: 5.5rem" href="#" role="button" data-toggle="modal" data-target="#registerModal">免费注册</a>
+                <a class="btn btn-normal" href="#" role="button" data-toggle="modal" data-target="#loginModal">立即登录</a>
+            </p>
+        </div>
+    </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h2 style="margin-left: 20px;margin-top: 10px">音乐与艺术</h2>
+                    <div class="card-body">
+                        <div style="width: 100%;height: 30%"></div>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;音乐艺术是用有组织的音构成的听觉意象，来表达人们的思想感情与社会现实生活的一种艺术形式。任何一种艺术形式都有自己表情达意、塑造艺术意象的表现手段，比如舞蹈是通过肢体动作、面部表情，绘画是通过线条、色彩、构图，文学是通过字、词、句、篇来体现艺术意象。</p>
+                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <h2 style="margin-left: 20px;margin-top: 10px">计算机科学</h2>
+                    <div class="card-body">
+                        <div style="width: 100%;height: 30%"></div>
+                        <p>计算机科学是一门包含各种各样与计算和信息处理相关主题的系统学科，从抽象的算法分析、形式化语法等等，到更具体的主题如编程语言、程序设计、软件和硬件等。</p>
+                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <h2 style="margin-left: 20px;margin-top: 10px">哲学</h2>
+                    <div class="card-body">
+                        <div style="width: 100%;height: 30%"></div>
+                        <p>是对基本和普遍之问题的研究的学科，是关于世界观的理论体系。世界观是关于世界的本质、发展的根本规律、人的思维与存在的根本关系的等普遍基本问题的总体认识，方法论是人类根据世界观形成的认识世界的方法。</p>
+                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+
+</main>
+</body>
+</html>
