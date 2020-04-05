@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired UserDAO userDAO;
-    @Autowired RoleService roleService;
+    //@Autowired RoleService roleService;
 
     //todo register
     public Optional<User> get(int id){
@@ -36,8 +36,8 @@ public class UserService {
         return namelist;
     }
 
-    public Role getRoleById(int id){
-        return roleService.getById(userDAO.findRidById(id));
-    }
+    /*public Role getRoleById(int id){
+        return roleService.getById(userDAO.findById(id).get().getRid());
+    }*/
 
 }

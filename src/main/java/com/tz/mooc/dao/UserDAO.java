@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface UserDAO extends JpaRepository<User,Integer> {
     ArrayList<User> findAllByRid(int rid);
 
-    int findRidById(int id);
     Optional<User> findById(int id);
 
     Optional<User> findByEmail(String email);
