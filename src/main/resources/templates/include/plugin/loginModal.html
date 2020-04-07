@@ -8,17 +8,25 @@
                 <div class="modal-title">
                     <h1 class="text-center">登录</h1>
                 </div>
-                <form class="form-group" action="">
+                <div class="loginErrorMessageDiv" style="visibility: hidden">
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        <span class="errorMessage"></span>
+                    </div>
+                </div>
+                <form class="form-group" novalidate id="form-login">
                     <div class="form-group">
-                        <label>用户名</label>
-                        <input class="form-control" type="text" placeholder="">
+                        <label for="inputEmail">账号</label>
+                        <input @keyup.enter="login" v-model.trim="bean.email" type="email" id="inputEmail" class="form-control"
+                               placeholder="请输入邮箱地址" required="required">
                     </div>
                     <div class="form-group">
-                        <label>密码</label>
-                        <input class="form-control" type="password" placeholder="">
+                        <label for="inputPassword">密码</label>
+                        <input @keyup.enter="login" v-model.trim="bean.password" type="password" id="inputPassword" class="form-control"
+                               placeholder="请输入密码" required="required">
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-primary" type="submit">登录</button>
+                        <button class="btn btn-primary" @click="login" type="submit">登录</button>
                         <button class="btn btn-danger" data-dismiss="modal">取消</button>
                     </div>
                     <a href="" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">还没有账号？点我注册</a>

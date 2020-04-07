@@ -26,6 +26,7 @@
 <script>
     $(function () {
         var data4Vue = {
+            result: [],
             bean: {email: '', password: ''},
             temp: {email: '', name: '', rid: 0}
         };
@@ -39,7 +40,8 @@
             },
             methods: {
                 login: function () {
-                    axios.post('homelogin', this.bean).then(function (response) {
+                    axios.post('mooclogin', this.bean).then(function (response) {
+                        var result = response.data;
                         var temp = response.data.data;
                         if (temp.rid == 1) {
                             sessionStorage.setItem('username',temp.name);

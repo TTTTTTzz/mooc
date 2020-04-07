@@ -12,4 +12,9 @@ public class HomePageController {
         return "login";
     }
 
+    @GetMapping(value="/mooc")
+    public String mooc(){
+        return "student/studentHome";
+    }
+
 }

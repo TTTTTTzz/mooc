@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="admin/adminHeader::html('MOOC')"></head>
+
+<body>
+<script>
+    $(function () {
+        var data4Vue = {
+            result: [],
+            name: '',
+            email: '',
+            bean: {email: '', password: ''}
+        };
+        var data4Nav = {
+            name: ''
+        };
+
+        var vue1 = new Vue({
+            el: '#studentNav',
+            data: data4Nav,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            },
+        });
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            },
+
+            methods: {
+                login: function () {
+                    axios.post('mooclogin', this.bean).then(function (response) {
+                        this.result = response.data;
+                        var temp = response.data.data;
+                        if (temp != null && temp.rid == 3) {
+                            sessionStorage.setItem('username', temp.name);
+                            sessionStorage.setItem('userEmail', temp.email);
+                            location.href = "/test";
+                        } else {
+                            $("span.errorMessage").html(result.message);
+                            $("div.loginErrorMessageDiv").css("visibility", "visible");
+                        }
+                    });
+                }
+            }
+
+
+        });
+    });
+</script>
+<div th:replace="include/plugin/studentNav::html"></div>
+
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="background-image: url('./img/bg.jpg');background-repeat: repeat-x">
+        <div class="container row" id="workingArea">
+            <div th:replace="include/plugin/loginModal::html"></div>
+            <div th:replace="include/plugin/registerModal::html"></div>
+            <div class="col-2"></div>
+            <div class="col-7">
+                <br>
+                <h2 class="display-5">个人信息中心</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 mb-4">
+                <div class="nav flex-column nav-pills list-group" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active list-group-item" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">基本信息</a>
+                    <a class="nav-link list-group-item" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">修改密码</a>
+                </div>
+            </div>
+
+
+            <div class="tab-content col-md-10" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div>
+                        <h4 class="mb-3">基本信息</h4>
+                        <hr class="mb-4">
+                        <form class="needs-validation" novalidate="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="userName">名字</label>
+                                    <input type="text" class="form-control" id="userName" placeholder="" value=""
+                                           required="">
+                                    <div class="invalid-feedback">
+                                        Valid first name is required.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email">邮箱</label>
+                                    <input type="email" class="form-control" id="email" placeholder="" value=""
+                                           required="">
+                                    <div class="invalid-feedback">
+                                        Valid last name is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-12">
+                                <button class="btn btn-info ml-auto" type="submit">保存</button>
+                                <button class="btn btn-danger ml-1" type="submit">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div>
+                        <h4 class="mb-3">修改密码</h4>
+                        <hr class="mb-4">
+                        <form class="needs-validation" novalidate="">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="currentPassword">当前密码</label>
+                                    <input type="password" class="form-control" id="currentPassword" placeholder="输入当前密码" value=""
+                                           required="">
+                                    <div class="invalid-feedback">
+                                        Valid first name is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="newPassword">新密码</label>
+                                    <input type="password" class="form-control mb-2" id="newPassword" placeholder="请输入新密码" value=""
+                                           required="">
+                                    <div class="invalid-feedback">
+                                        Valid first name is required.
+                                    </div>
+                                    <input type="password" class="form-control" id="newPasswordAgain" placeholder="重复上面的新密码" value=""
+                                           required="">
+                                    <div class="invalid-feedback">
+                                        Valid first name is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row col-4">
+                                <button class="btn btn-danger ml-auto" type="submit">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div> <!-- /container -->
+
+</main>
+</body>
+</html>

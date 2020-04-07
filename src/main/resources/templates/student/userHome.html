@@ -1,10 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="admin/adminHeader::html('MOOC')"></head>
+
 <body>
-$END$
+<script>
+    $(function () {
+        var data4Vue = {
+            result: [],
+            name: '',
+            email: '',
+            bean: {email: '', password: ''}
+        };
+        var data4Nav = {
+            name: ''
+        };
+
+        var vue1 = new Vue({
+            el: '#studentNav',
+            data: data4Nav,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            },
+        });
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#workingArea',
+            data: data4Vue,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            },
+
+            methods: {
+                login: function () {
+                    axios.post('mooclogin', this.bean).then(function (response) {
+                        this.result = response.data;
+                        var temp = response.data.data;
+                        if (temp != null && temp.rid == 3) {
+                            sessionStorage.setItem('username', temp.name);
+                            sessionStorage.setItem('userEmail', temp.email);
+                            location.href = "/test";
+                        } else {
+                            $("span.errorMessage").html(result.message);
+                            $("div.loginErrorMessageDiv").css("visibility", "visible");
+                        }
+                    });
+                }
+            }
+
+
+        });
+    });
+</script>
+<div th:replace="include/plugin/studentNav::html"></div>
+
+<main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="background-image: url('./img/bg.jpg');background-repeat: repeat-x">
+        <div class="container row" id="workingArea">
+            <div th:replace="include/plugin/loginModal::html"></div>
+            <div th:replace="include/plugin/registerModal::html"></div>
+            <div class="col-2"></div>
+            <div class="col-7">
+                <br>
+                <h2 class="display-5">欢迎回来，{{this.name}}！</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav>
+            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">全部课程</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">进行中</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">已完成</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="card course-card">
+                    <div class="card-header">
+                        <a>平面设计</a>
+                        <button class="btn btn-outline-info">进入课程</button>
+                    </div>
+                    <div class="card-body">
+                        <p>任课老师：{{}}</p>
+                        <p>当前课程进度</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card course-card">
+                    <div class="card-header">
+                        <a style="font-family: 'Adobe 黑体 Std R';font-size: 25px">平面设计</a>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+        </div>
+
+
+
+    </div> <!-- /container -->
+
+</main>
 </body>
 </html>

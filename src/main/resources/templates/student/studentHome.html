@@ -7,8 +7,24 @@
 <script>
     $(function(){
         var data4Vue = {
+            result: [],
+            name:'',
+            email:'',
+            bean:{email:'',password:''},//for login
+            user:{email:'',password:'',repeatpassword:'',name:''},//for register
+            reg:''
+        };
+        var data4Nav={
             name:''
         };
+
+        var vue1=new Vue({
+            el: '#studentNav',
+            data: data4Nav,
+            mounted: function () { //mounted　表示这个 Vue 对象加载成功了
+                this.name = sessionStorage.getItem('username');
+            },
+        });
 
         //ViewModel
         var vue = new Vue({
@@ -16,18 +32,83 @@
             data: data4Vue,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.name = sessionStorage.getItem('username');
+            },
+
+            methods: {
+                register: function () {
+                    this.reg=new RegExp(this.user.password);
+                    $("#form-register").submit(function(event){
+                        const f=$(this);
+                        if(f[0].checkValidity()===false){
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        f.addClass("was-validated")
+                    });
+
+                    axios.post(url, this.user).then(function (response) {
+                        var result = response.data;
+                        if (result.code == 0) {
+                            location.href = "registerSuccess";
+                        } else {
+                            $("span.errorMessage").html(result.message);
+                            $("div.registerErrorMessageDiv").css("visibility", "visible");
+                        }
+                    })
+                },
+
+                login:function(){
+                    $("#form-login").submit(function(event){
+                        const f=$(this);
+                        if(f[0].checkValidity()===false){
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        f.addClass("was-validated")
+                    });
+
+                    axios.post('mooclogin', this.bean).then(function (response) {
+                        this.result = response.data;
+                        var temp = response.data.data;
+                        if (temp!=null && temp.rid == 3) {
+                            sessionStorage.setItem('username',temp.name);
+                            sessionStorage.setItem('userEmail',temp.email);
+                            location.href = "/test";
+                        } else if(result.message!=null){
+                            $("span.errorMessage").html(result.message);
+                            $("div.loginErrorMessageDiv").css("visibility", "visible");
+                        }
+                    });
+                }
             }
+
+
         });
+
     });
 </script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#form-register").submit(function(event){
+            const f=$(this);
+            if(f[0].checkValidity()===false){
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            f.addClass("was-validated")
+        });
+    })
+</script>
 <div th:replace="include/plugin/studentNav::html"></div>
-<div th:replace="include/plugin/loginModal::html"></div>
-<div th:replace="include/plugin/registerModal::html"></div>
+
 <main role="main">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" style="background-image: url("./img/QQ图片20200307155218.jpg")">
-    <div class="container row">
+    <div class="jumbotron">
+    <div class="container row" id="workingArea">
+        <div th:replace="include/plugin/loginModal::html"></div>
+        <div th:replace="include/plugin/registerModal::html"></div>
         <div class="col-2"></div>
         <div class="col-7">
             <br>

@@ -46,6 +46,27 @@
     box-shadow: -1px 0px 0 0 #eee;
 }
 
+/*nav-tab*/
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #0b2e13;
+    background-color: #99cc99;
+}
+
+.nav-pills .nav-link{
+    color: #339933;
+}
+
+.nav-pills .nav-link:hover{
+    color: #34760e;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    background-color: white;
+    border-color: white;
+}
+
+
 /*nav-pills*/
 
 .nav-tabs a:hover {

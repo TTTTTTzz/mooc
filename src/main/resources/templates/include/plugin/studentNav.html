@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" th:fragment="html">
+<nav id="studentNav" class="navbar navbar-expand-md navbar-dark fixed-top" th:fragment="html">
     <div class="col-1"></div>
     <a class="navbar-brand" href="#" style="margin-left: 3rem">MOOC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -8,9 +8,6 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">发现</a>
@@ -24,19 +21,28 @@
                         <a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Action</a>
                     </div>
-
-
                 </div>
             </li>
             <li class="nav-item">
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" style="margin-left: 20rem" type="text" placeholder="今天你想学习什么？"
+                    <input class="form-control mr-sm-2" style="width: 25rem" type="text" placeholder="今天你想学习什么？"
                            aria-label="Search">
                     <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">搜索</button>
                 </form>
             </li>
         </ul>
-        <img width="20px" height="20px" src="./img/User_Avatar-512.png" style="margin-right: 4rem">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <img width="20px" height="20px" alt="Avatar" src="./img/User_Avatar-512.png">{{this.name}}</a>
+                <div class="dropdown-menu" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#"><span class="fa fa-user-circle"></span>&nbsp; 个人中心</a>
+                    <a class="dropdown-item" href="#"><span class="fa fa-cog"></span>&nbsp; 设置</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><span class="fa fa-sign-out"></span>&nbsp; 退出登录</a>
+                </div>
+            </li>
+        </ul>
         <div class="col-1"></div>
     </div>
     </div>
