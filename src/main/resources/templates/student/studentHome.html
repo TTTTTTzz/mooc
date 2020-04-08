@@ -12,7 +12,7 @@
             email:'',
             bean:{email:'',password:''},//for login
             user:{email:'',password:'',repeatpassword:'',name:''},//for register
-            reg:''
+            temp:{email: '', name: ''}
         };
         var data4Nav={
             name:''
@@ -23,6 +23,7 @@
             data: data4Nav,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.name = sessionStorage.getItem('username');
+                this.email = sessionStorage.getItem('userEmail');
             },
             methods: {
                 logout: function () {
@@ -75,8 +76,11 @@
                     });
 */
                     axios.post('mooclogin', this.bean).then(function (response) {
+                        var temp = response.data.data;
                         this.result = response.data;
                         if (result.code === 0) {
+                            sessionStorage.setItem('username',temp.name);
+                            sessionStorage.setItem('userEmail',temp.email);
                             location.reload();
                         } else if(result.message!=null){
                             $("span.errorMessage").html(result.message);

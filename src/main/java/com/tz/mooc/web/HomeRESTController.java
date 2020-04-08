@@ -61,7 +61,11 @@ public class HomeRESTController { //后台管理的登陆
         try {
             UserUtil.userLogin(bean);
             subject.checkRole("student");
-            return Result.success();
+            session.setAttribute("userName",bean.getName());
+            User user = new User();
+            user.setName(userService.getByEmail(bean.getEmail()).getName());
+            user.setEmail(bean.getEmail());
+            return Result.success(user);
         } catch (AuthenticationException e) {
             String message = "账号或密码错误，请重新输入";
             return Result.fail(message);
