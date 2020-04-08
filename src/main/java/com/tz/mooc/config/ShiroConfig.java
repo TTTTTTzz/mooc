@@ -1,6 +1,8 @@
 package com.tz.mooc.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.tz.mooc.realm.MyRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -74,5 +76,11 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
+    }
+    
+    @Bean(name = "shiroDialect")
+    public ShiroDialect getShiroDialect()
+    {
+        return new ShiroDialect();
     }
 }

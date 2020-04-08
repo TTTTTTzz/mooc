@@ -40,4 +40,13 @@ public class UserService {
         return roleService.getById(userDAO.findById(id).get().getRid());
     }*/
 
+    public void userRegister(User bean){
+        userDAO.save(bean);
+    }
+
+    public String getSaltByEmail(String email){
+        return userDAO.findByEmail(email).get().getSalt();
+
+    }
+
 }
