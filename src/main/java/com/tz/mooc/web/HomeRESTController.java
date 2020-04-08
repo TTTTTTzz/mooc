@@ -1,23 +1,21 @@
 package com.tz.mooc.web;
 
+import com.sun.org.apache.bcel.internal.generic.FSUB;
 import com.tz.mooc.config.JwtToken;
 import com.tz.mooc.pojo.User;
 import com.tz.mooc.service.UserService;
 import com.tz.mooc.util.JWTUtil;
 import com.tz.mooc.util.Result;
+import com.tz.mooc.util.UserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.session.Session;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
@@ -34,7 +32,7 @@ public class HomeRESTController { //后台管理的登陆
         email = HtmlUtils.htmlEscape(email);
         Subject subject = SecurityUtils.getSubject();
         //UsernamePasswordToken token = new UsernamePasswordToken(email, bean.getPassword());
-        AuthenticationToken token = new JwtToken(JWTUtil.encode(String.valueOf(bean.getId())));
+        AuthenticationToken token = new JwtToken(JWTUtil.encode(String.valueOf(bean.getId()),bean.getPassword()));
         try {
             subject.login(token);
             //成功登陆 //todo test 不存在的账号
@@ -50,25 +48,49 @@ public class HomeRESTController { //后台管理的登陆
             String message = "账号密码错误";
             return Result.fail(message);
         }
+    }
 
-        /*Subject subject = SecurityUtils.getSubject();
-        AuthenticationToken token = new JwtToken(JWTUtil.encode(String.valueOf(bean.getId())));
-        subject.login(token);
-        Session session = subject.getSession();
-        session.setAttribute("subject", subject);
-        return "admin/adminHome";*/
-        /*UsernamePasswordToken token = new UsernamePasswordToken(bean.getName(), bean.getPassword());
+    @PostMapping("/mooclogin")
+    public Object moocLogin(@RequestBody User bean, HttpSession session) {
+        if (userService.getSaltByEmail(bean.getEmail()) == null) {
+            String message = "账号不存在，请注册";
+            return Result.fail(message);
+        }
+        Subject subject = SecurityUtils.getSubject();
+        bean.setPassword(UserUtil.getInputPasswordCiph(bean.getPassword(), userService.getSaltByEmail(bean.getEmail())));
         try {
-            subject.login(token);
-            Session session = subject.getSession();
-            session.setAttribute("subject", subject);
-            return "admin/adminHome";
-
+            UserUtil.userLogin(bean);
+            subject.checkRole("student");
+            return Result.success();
         } catch (AuthenticationException e) {
-            System.out.println("验证失败");
-            return "login";
-        }*/
-        //return JWTUtil.encode("123");
+            String message = "账号或密码错误，请重新输入";
+            return Result.fail(message);
+        } catch (AuthorizationException e) {
+            String message = "用户不存在，请注册";
+            return Result.fail(message);
+        }
+    }
 
+    @PostMapping("/moocRegister")
+    public Object moocRegister(@RequestBody User user, HttpSession session){
+        String password = user.getPassword();
+
+        String[] saltAndCiphertext = UserUtil.encryptPassword(password);
+
+        user.setSalt(saltAndCiphertext[0]);
+        user.setPassword(saltAndCiphertext[1]);
+        user.setRid(3);
+
+        userService.userRegister(user);
+
+        return moocLogin(user, session); //使用户沆注册后立马登录
+    }
+
+    @GetMapping("/moocLogout")
+    public void logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+        }
     }
 }

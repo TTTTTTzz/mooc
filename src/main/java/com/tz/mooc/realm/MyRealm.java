@@ -79,7 +79,6 @@ public class MyRealm extends AuthorizingRealm {
             // 获取当前用户的所有角色，并且通过addRole添加到simpleAuthorizationInfo当中
             // 这样当Shiro内部检查用户是否有某项权限时就会从SimpleAuthorizationInfo中拿取校验
             Role role = roleService.getById(user.getRid());
-           // Role role = userService.getRoleById(userId);
             simpleAuthorizationInfo.addRole(role.getName());
             return simpleAuthorizationInfo;
         }

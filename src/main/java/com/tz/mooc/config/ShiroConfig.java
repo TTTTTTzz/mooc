@@ -37,23 +37,7 @@ public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-
-        // 添加ShiroFilter过滤器且命名为jwt
-        Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new ShiroFilter());
-        factoryBean.setFilters(filterMap);
-
         factoryBean.setSecurityManager(securityManager);
-        factoryBean.setUnauthorizedUrl("/401");  // 设置认证失败的路径
-
-        Map<String, String> filterRuleMap = new HashMap<>();
-        // 所有的请求通过ShiroFilter执行处理
-        //filterRuleMap.put("/**", "jwt");
-        // 排除401路径，ShiroFilter将不做过滤的操作
-        filterRuleMap.put("/mooc", "anon");
-        filterRuleMap.put("/login", "anon");
-        filterRuleMap.put("/401", "anon");
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
 
         return factoryBean;
     }
@@ -77,7 +61,7 @@ public class ShiroConfig {
         advisor.setSecurityManager(securityManager);
         return advisor;
     }
-    
+
     @Bean(name = "shiroDialect")
     public ShiroDialect getShiroDialect()
     {

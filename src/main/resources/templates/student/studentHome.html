@@ -24,6 +24,14 @@
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.name = sessionStorage.getItem('username');
             },
+            methods: {
+                logout: function () {
+                    axios.get('moocLogout').then(function (response) {
+                        location.href = "/mooc";
+                    });
+                }
+            }
+
         });
 
         //ViewModel
@@ -36,7 +44,6 @@
 
             methods: {
                 register: function () {
-                    this.reg=new RegExp(this.user.password);
                     $("#form-register").submit(function(event){
                         const f=$(this);
                         if(f[0].checkValidity()===false){
@@ -48,7 +55,7 @@
 
                     axios.post('moocRegister', this.user).then(function (response) {
                         var result = response.data;
-                        if (result.code == 0) {
+                        if (result.code === 0) {
                             location.href = "registerSuccess";
                         } else {
                             $("span.errorMessage").html(result.message);
@@ -58,7 +65,7 @@
                 },
 
                 login:function(){
-                    $("#form-login").submit(function(event){
+                    /*$("#form-login").submit(function(event){
                         const f=$(this);
                         if(f[0].checkValidity()===false){
                             event.preventDefault();
@@ -66,14 +73,11 @@
                         }
                         f.addClass("was-validated")
                     });
-
+*/
                     axios.post('mooclogin', this.bean).then(function (response) {
                         this.result = response.data;
-                        var temp = response.data.data;
-                        if (temp!=null && temp.rid == 3) {
-                            /*sessionStorage.setItem('username',temp.name);
-                            sessionStorage.setItem('userEmail',temp.email);*/
-                            location.href = "/test";
+                        if (result.code === 0) {
+                            location.reload();
                         } else if(result.message!=null){
                             $("span.errorMessage").html(result.message);
                             $("div.loginErrorMessageDiv").css("visibility", "visible");
@@ -81,8 +85,6 @@
                     });
                 }
             }
-
-
         });
 
     });
@@ -115,7 +117,7 @@
             <h2 class="display-5">在 MOOC，学习技能、解决问题</h2>
             <p>随便说说的。每个月，我们帮助 1000 万的开发者解决各种各样的技术问题。并助力他们在技术能力、职业生涯、影响力上获得提升。</p>
         </div>
-        <div  shiro:notAuthenticated>
+        <div shiro:notAuthenticated>
             <br><br><br>
             <p>
                 <a class="btn btn-normal" style="margin-left: 5.5rem" href="#" role="button" data-toggle="modal" data-target="#registerModal">免费注册</a>
