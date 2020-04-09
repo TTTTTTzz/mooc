@@ -3,7 +3,6 @@ package com.tz.mooc.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "course")
@@ -42,8 +41,6 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name="tid")
-
-    //todo 安全性 会暴露密码
     private User user;
     public User getUser() {
         return user;

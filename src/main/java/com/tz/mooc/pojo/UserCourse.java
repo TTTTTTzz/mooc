@@ -39,4 +39,16 @@ public class UserCourse {
     public void setCid(int cid) {
         this.cid = cid;
     }
+
+    @Basic
+    @Column(name = "progress")
+    private double progress;
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+    }
+
+    public double getProgress() {
+        return progress;
+    }
 }

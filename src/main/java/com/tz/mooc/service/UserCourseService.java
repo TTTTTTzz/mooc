@@ -1,5 +1,6 @@
 package com.tz.mooc.service;
 
+import com.tz.mooc.config.CourseProgress;
 import com.tz.mooc.dao.UserCourseDAO;
 import com.tz.mooc.pojo.Course;
 import com.tz.mooc.pojo.User;
@@ -20,12 +21,12 @@ public class UserCourseService {
     @Autowired
     CourseService courseService;
 
-    public List<Course> getCourseListByStudent(int uid){
+    public List<CourseProgress> getCourseListByStudent(int uid){
         List<UserCourse> ucList = userCourseDAO.findAllByUid(uid);
-        List<Course> courseList = new ArrayList<>();
+        List<CourseProgress> courseList = new ArrayList<>();
         for (UserCourse ucbean:ucList) {
-            Course c = courseService.get(ucbean.getCid()).get();
-            courseList.add(courseService.get(ucbean.getCid()).get());
+            CourseProgress c = new CourseProgress(courseService.get(ucbean.getCid()).get(),ucbean.getProgress());
+            courseList.add(c);
         }
         return courseList;
     }

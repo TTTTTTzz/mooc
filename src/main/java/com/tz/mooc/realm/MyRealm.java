@@ -13,6 +13,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,11 +22,9 @@ import java.util.List;
 
 @Component
 public class MyRealm extends AuthorizingRealm {
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private RoleService roleService;
 
     @Override
     public String getName() {
@@ -56,6 +56,7 @@ public class MyRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken; //获得用户输入的用户名,这个对象就是login()传递过来的，将它强转以取出封装的用户名
         String userEmail = token.getUsername();
 
+        UserService userService = getUserService();
         User user=userService.getByEmail(userEmail);
         if(user == null) //用户不存在，返回null
         {
@@ -78,10 +79,17 @@ public class MyRealm extends AuthorizingRealm {
             SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
             // 获取当前用户的所有角色，并且通过addRole添加到simpleAuthorizationInfo当中
             // 这样当Shiro内部检查用户是否有某项权限时就会从SimpleAuthorizationInfo中拿取校验
+            RoleService roleService = getRoleService();
             Role role = roleService.getById(user.getRid());
             simpleAuthorizationInfo.addRole(role.getName());
             return simpleAuthorizationInfo;
         }
         return null;
+    }
+    private UserService getUserService() {
+        return (UserService) applicationContext.getBean("userService");
+    }
+    private RoleService getRoleService(){
+        return (RoleService) applicationContext.getBean("roleService");
     }
 }
