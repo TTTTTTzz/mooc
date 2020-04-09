@@ -3,7 +3,7 @@ package com.tz.mooc.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "course")
@@ -17,22 +17,22 @@ public class Course {
     public int getId() {
         return id;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Column(name = "name")
     private String name;
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
     @ManyToOne
     @JoinColumn(name="sid")
-
     private Subject subject;
-
     public Subject getSubject() {
         return subject;
     }
@@ -45,11 +45,10 @@ public class Course {
 
     //todo 安全性 会暴露密码
     private User user;
-
     public User getUser() {
         return user;
     }
-    public void setUser(User teacher) {
+    public void setUser(User user) {
         this.user = user;
     }
 }
