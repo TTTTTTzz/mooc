@@ -79,6 +79,7 @@
                         var temp = response.data.data;
                         this.result = response.data;
                         if (result.code === 0) {
+                            sessionStorage.setItem('userId',temp.id);
                             sessionStorage.setItem('username',temp.name);
                             sessionStorage.setItem('userEmail',temp.email);
                             location.reload();

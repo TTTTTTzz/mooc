@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface UserCourseDAO extends JpaRepository<UserCourse, Integer> {
     List<UserCourse> findAllByUid(int id);
+    UserCourse findAllByUidAndCid(int uid,int cid);
 }

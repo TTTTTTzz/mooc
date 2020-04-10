@@ -28,7 +28,6 @@
                         location.href = "/mooc";
                     });
                 }
-
             }
         });
 
@@ -43,7 +42,6 @@
             },
 
             methods: {
-
                 listAll:function () {
                     var url = "uc/"+this.email+"/all";
                     axios.get(url).then(function (response) {
@@ -83,7 +81,7 @@
                     <div class="card course-card">
                         <div class="card-header">
                             <a v-if="bean.course">{{bean.course.name}}</a>
-                            <a :href="'user_course?cid='+bean.course.id"><button class="btn btn-outline-info">进入课程</button></a>
+                            <a v-if="bean.course" :href="'user_course?cid='+bean.course.id"><button class="btn btn-outline-info">进入课程</button></a>
                         </div>
                         <div class="card-body">
                             <p v-if="bean.course && bean.course.user">任课老师：{{bean.course.user.name}}</p>

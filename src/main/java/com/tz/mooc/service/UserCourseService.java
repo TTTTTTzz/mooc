@@ -43,4 +43,8 @@ public class UserCourseService {
         userCourseDAO.save(bean);
     }
 
+    public UserCourse getByUserAndCourse(int uid,int cid){
+        return userCourseDAO.findAllByUidAndCid(uid,cid);
+    }
+
 }
