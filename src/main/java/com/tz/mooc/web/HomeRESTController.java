@@ -63,6 +63,7 @@ public class HomeRESTController { //后台管理的登陆
             subject.checkRole("student");
             session.setAttribute("userName",bean.getName());
             User user = new User();
+            user.setId(userService.getByEmail(bean.getEmail()).getId());
             user.setName(userService.getByEmail(bean.getEmail()).getName());
             user.setEmail(bean.getEmail());
             return Result.success(user);

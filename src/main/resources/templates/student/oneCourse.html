@@ -68,12 +68,13 @@
                 },
 
                 changeVideoAddress:function (address,cid) {
+                    var url="uc/"+this.bean.cid;
                     this.currentAddress = address;
                     document.getElementById('address').setAttribute("src",this.currentAddress);
                     document.getElementById('myVideo').load();
                     this.bean.uid=sessionStorage.getItem('userId');
                     this.bean.cid=cid;
-                    axios.post("uc", this.bean).then(function (response) {
+                    axios.put(url, this.bean).then(function (response) {
                     });
                 }
             }

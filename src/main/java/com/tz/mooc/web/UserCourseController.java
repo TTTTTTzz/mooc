@@ -22,13 +22,16 @@ public class UserCourseController {
         return userCourseService.getCourseListByStudent(userService.getByEmail(email).getId());
     }
 
-    @PostMapping("uc")
-    public Object add(@RequestBody UserCourse bean) throws Exception {
+    @PutMapping ("uc/{id}")
+    public Object update(@RequestBody UserCourse bean) throws Exception {
+        UserCourse uc = userCourseService.getByUserAndCourse(bean.getUid(),bean.getCid());
         double size= videoService.getListByCourse(bean.getCid()).size();
-        double progress=userCourseService.getByUserAndCourse(bean.getUid(),bean.getCid()).getProgress();
-        progress+=1/size;
+        double progress=uc.getProgress();
+        progress+=(1/size)*100;
+        progress=progress>100?100:progress;
+        bean.setId(uc.getId());
         bean.setProgress(progress);
-        userCourseService.add(bean);
+        userCourseService.update(bean);
         return bean;
     }
 
