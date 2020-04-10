@@ -1,6 +1,6 @@
 <nav id="studentNav" class="navbar navbar-expand-md navbar-dark fixed-top" th:fragment="html">
     <div class="col-1"></div>
-    <a class="navbar-brand" href="#" style="margin-left: 3rem">MOOC</a>
+    <a class="navbar-brand" href="mooc" style="margin-left: 3rem">MOOC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,8 +36,8 @@
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <img width="20px" height="20px" alt="Avatar" src="./img/User_Avatar-512.png">{{this.name}}</a>
                 <div class="dropdown-menu" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="userHome"><span class="fa fa-user-circle"></span>&nbsp; 个人中心</a>
-                    <a class="dropdown-item" href="#"><span class="fa fa-cog"></span>&nbsp; 设置</a>
+                    <a class="dropdown-item" href="user_home"><span class="fa fa-user-circle"></span>&nbsp; 个人中心</a>
+                    <a class="dropdown-item" href="user_setting"><span class="fa fa-cog"></span>&nbsp; 设置</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" @click="logout"><span class="fa fa-sign-out"></span>&nbsp; 退出登录</a>
                 </div>

@@ -10,7 +10,8 @@
             result: [],
             name: '',
             email: '',
-            bean: {email: '', password: ''}
+            newPassword:'',
+            user: {email: '', name: '',password: ''}
         };
         var data4Nav = {
             name: ''
@@ -22,6 +23,13 @@
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.name = sessionStorage.getItem('username');
             },
+            methods: {
+                logout: function () {
+                    axios.get('moocLogout').then(function (response) {
+                        vue.user=response.data;
+                    });
+                }
+            }
         });
 
         //ViewModel
@@ -30,21 +38,49 @@
             data: data4Vue,
             mounted: function () { //mounted　表示这个 Vue 对象加载成功了
                 this.name = sessionStorage.getItem('username');
+                this.getUserInfo();
             },
 
             methods: {
-                login: function () {
-                    axios.post('mooclogin', this.bean).then(function (response) {
-                        this.result = response.data;
-                        var temp = response.data.data;
-                        if (temp != null && temp.rid == 3) {
-                            sessionStorage.setItem('username', temp.name);
-                            sessionStorage.setItem('userEmail', temp.email);
-                            location.href = "/test";
-                        } else {
-                            $("span.errorMessage").html(result.message);
-                            $("div.loginErrorMessageDiv").css("visibility", "visible");
+                getUserInfo:function () {
+                    var uid=sessionStorage.getItem('userId');
+                    var url='users/'+uid;
+                    axios.get(url).then(function (response) {
+                        vue.user=response.data;
+                    });
+                },
+
+                updateInfo:function () {
+                    $("#changeInfo").submit(function(event){
+                        const f=$(this);
+                        if(f[0].checkValidity()===false){
+                            event.preventDefault();
+                            event.stopPropagation();
                         }
+                        f.addClass("was-validated")
+                    });
+
+                    var uid=sessionStorage.getItem('userId');
+                    var url='users/'+uid;
+                    axios.put(url,vue.user).then(function (response) {
+
+                    });
+                },
+
+                updatePassword:function () {
+                    $("#changePassword").submit(function(event){
+                        const f=$(this);
+                        if(f[0].checkValidity()===false){
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        f.addClass("was-validated")
+                    });
+
+                    var uid=sessionStorage.getItem('userId');
+                    var url='users/password/'+uid;
+                    vue.user.password = vue.newPassword;
+                    axios.put(url,vue.user).then(function (response) {
                     });
                 }
             }
@@ -55,13 +91,11 @@
 </script>
 <div th:replace="include/plugin/studentNav::html"></div>
 
-<main role="main">
+<main role="main" id="workingArea">
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" style="background-image: url('./img/bg.jpg');background-repeat: repeat-x">
-        <div class="container row" id="workingArea">
-            <div th:replace="include/plugin/loginModal::html"></div>
-            <div th:replace="include/plugin/registerModal::html"></div>
+        <div class="container row" >
             <div class="col-2"></div>
             <div class="col-7">
                 <br>
@@ -85,27 +119,23 @@
                     <div>
                         <h4 class="mb-3">基本信息</h4>
                         <hr class="mb-4">
-                        <form class="needs-validation" novalidate="">
+                        <form id="changeInfo" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="userName">名字</label>
-                                    <input type="text" class="form-control" id="userName" placeholder="" value=""
-                                           required="">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    <input type="text" v-model.trim="user.name" class="form-control" id="userName" :placeholder="[[user.name]]"
+                                           required>
+                                    <div class="invalid-feedback">名字不能为空</div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="email">邮箱</label>
-                                    <input type="email" class="form-control" id="email" placeholder="" value=""
-                                           required="">
-                                    <div class="invalid-feedback">
-                                        Valid last name is required.
-                                    </div>
+                                    <input type="email" v-model.trim="user.email" class="form-control" id="email" :placeholder="[[user.email]]"
+                                           required>
+                                    <div class="invalid-feedback">邮箱不能为空</div>
                                 </div>
                             </div>
                             <div class="row col-12">
-                                <button class="btn btn-info ml-auto" type="submit">保存</button>
+                                <button class="btn btn-info ml-auto" type="submit" @click="updateInfo">保存</button>
                                 <button class="btn btn-danger ml-1" type="submit">取消</button>
                             </div>
                         </form>
@@ -115,35 +145,20 @@
                     <div>
                         <h4 class="mb-3">修改密码</h4>
                         <hr class="mb-4">
-                        <form class="needs-validation" novalidate="">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="currentPassword">当前密码</label>
-                                    <input type="password" class="form-control" id="currentPassword" placeholder="输入当前密码" value=""
-                                           required="">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
-                                </div>
-                            </div>
-
+                        <form id="changePassword" class="needs-validation" novalidate >
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label for="newPassword">新密码</label>
-                                    <input type="password" class="form-control mb-2" id="newPassword" placeholder="请输入新密码" value=""
-                                           required="">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
-                                    <input type="password" class="form-control" id="newPasswordAgain" placeholder="重复上面的新密码" value=""
-                                           required="">
-                                    <div class="invalid-feedback">
-                                        Valid first name is required.
-                                    </div>
+                                    <input type="password" class="form-control mb-2" id="newPassword" v-model.trim="newPassword" placeholder="请输入新密码"
+                                           required>
+                                    <div class="invalid-feedback">新密码不能为空</div>
+                                    <input type="password" class="form-control" id="newPasswordAgain" placeholder="重复上面的新密码" :pattern="'^'+newPassword+'$'"
+                                           required>
+                                    <div class="invalid-feedback">请重复输入新密码</div>
                                 </div>
                             </div>
                             <div class="row col-4">
-                                <button class="btn btn-danger ml-auto" type="submit">提交</button>
+                                <button class="btn btn-danger ml-auto" type="submit" @click="updatePassword">提交</button>
                             </div>
                         </form>
                     </div>
