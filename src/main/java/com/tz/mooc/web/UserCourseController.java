@@ -2,12 +2,11 @@ package com.tz.mooc.web;
 
 import com.tz.mooc.config.CourseProgress;
 import com.tz.mooc.pojo.Course;
+import com.tz.mooc.pojo.UserCourse;
 import com.tz.mooc.service.UserCourseService;
 import com.tz.mooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,13 @@ public class UserCourseController {
     List<CourseProgress> list(@PathVariable("email") String email) throws Exception {
         return userCourseService.getCourseListByStudent(userService.getByEmail(email).getId());
     }
+
+    @PostMapping("uc")
+    public Object add(@RequestBody UserCourse bean) throws Exception {
+        userCourseService.add(bean);
+        return bean;
+    }
+
+
 
 }

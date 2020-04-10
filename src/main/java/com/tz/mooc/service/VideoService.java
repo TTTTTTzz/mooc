@@ -1,10 +1,8 @@
 package com.tz.mooc.service;
 
 
-import com.tz.mooc.dao.CourseDAO;
 import com.tz.mooc.dao.VideoDAO;
 import com.tz.mooc.pojo.Course;
-import com.tz.mooc.pojo.Subject;
 import com.tz.mooc.pojo.Video;
 import com.tz.mooc.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,7 @@ public class VideoService  {
         return videoDAO.findById(id);
     }
 
-    public Optional<Video> getByCourse(int cid){return  videoDAO.findAllByCourse(courseService.get(cid).get());}
+    public Optional<Video> getByCourse(int cid){return  videoDAO.findByCourse(courseService.get(cid).get());}
 
     public void update(Video bean){
         videoDAO.save(bean);
@@ -77,5 +75,9 @@ public class VideoService  {
         Page<Video> pageFromJPA =videoDAO.findAll(pageable);
 
         return new Page4Navigator<>(pageFromJPA,navigatePages);
+    }
+
+    public List<Video> getListByCourse(int cid){
+        return videoDAO.findAllByCourse(courseService.get(cid).get());
     }
 }

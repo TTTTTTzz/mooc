@@ -10,9 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class VideoController {
@@ -56,6 +59,11 @@ public class VideoController {
         start = start<0?0:start;
         Page4Navigator<Video> page =videoService.list(start, size,5);
         return page;
+    }
+
+    @GetMapping("/course/{cid}/videos/all")
+    public List<Video> list(@PathVariable("cid") int cid){
+        return videoService.getListByCourse(cid);
     }
 
     @DeleteMapping("/videos/{id}")

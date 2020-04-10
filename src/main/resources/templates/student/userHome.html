@@ -83,7 +83,7 @@
                     <div class="card course-card">
                         <div class="card-header">
                             <a v-if="bean.course">{{bean.course.name}}</a>
-                            <button class="btn btn-outline-info">进入课程</button>
+                            <a :href="'user_course?cid='+bean.course.id"><button class="btn btn-outline-info">进入课程</button></a>
                         </div>
                         <div class="card-body">
                             <p v-if="bean.course && bean.course.user">任课老师：{{bean.course.user.name}}</p>
@@ -99,13 +99,14 @@
                         </div>
                     </div>
                 </div>
+                <hr class="mt-lg-3">
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div v-for="bean in beans">
                     <div class="card course-card" v-if="bean.progress<100">
                         <div class="card-header">
                             <a v-if="bean.course">{{bean.course.name}}</a>
-                            <button class="btn btn-outline-info">进入课程</button>
+                            <a :href="'user_course?cid='+bean.course.id"><button class="btn btn-outline-info">进入课程</button></a>
                         </div>
                         <div class="card-body">
                             <p v-if="bean.course && bean.course.user">任课老师：{{bean.course.user.name}}</p>
@@ -118,13 +119,14 @@
                         </div>
                     </div>
                 </div>
+                <hr class="mt-lg-3">
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <div v-for="bean in beans">
                     <div class="card course-card" v-if="bean.progress && bean.progress == 100">
                         <div class="card-header">
                             <a v-if="bean.course">{{bean.course.name}}</a>
-                            <button class="btn btn-outline-info">进入课程</button>
+                            <a :href="'user_course?cid='+bean.course.id"><button class="btn btn-outline-info">进入课程</button></a>
                         </div>
                         <div class="card-body">
                             <p v-if="bean.course && bean.course.user">任课老师：{{bean.course.user.name}}</p>
@@ -137,11 +139,9 @@
                         </div>
                     </div>
                 </div>
+                <hr class="mt-lg-3">
             </div>
         </div>
-
-
-
     </div> <!-- /container -->
 
 </main>

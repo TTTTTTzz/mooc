@@ -31,4 +31,16 @@ public class UserCourseService {
         return courseList;
     }
 
+    public void add(UserCourse bean){
+        userCourseDAO.save(bean);
+    }
+
+    public void delete(int id){
+        userCourseDAO.deleteById(id);
+    }
+
+    public void update(UserCourse bean){
+        userCourseDAO.save(bean);
+    }
+
 }
