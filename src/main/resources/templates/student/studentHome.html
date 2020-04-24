@@ -28,6 +28,7 @@
             methods: {
                 logout: function () {
                     axios.get('moocLogout').then(function (response) {
+                        sessionStorage.clear();
                         location.href = "/mooc";
                     });
                 }
@@ -50,43 +51,42 @@
                         if(f[0].checkValidity()===false){
                             event.preventDefault();
                             event.stopPropagation();
+                            return;
                         }
-                        f.addClass("was-validated")
+                        f.addClass("was-validated");
+                        axios.post('moocRegister', this.user).then(function (response) {
+                            var result = response.data;
+                            if (result.code === 0) {
+
+                            } else {
+                                $("span.errorMessage4register").html(result.message);
+                                $("div.registerErrorMessageDiv").css("visibility", "visible");
+                            }
+                        });
                     });
-
-                    axios.post('moocRegister', this.user).then(function (response) {
-                        var result = response.data;
-                        if (result.code === 0) {
-                            location.href = "registerSuccess";
-                        } else {
-                            $("span.errorMessage").html(result.message);
-                            $("div.registerErrorMessageDiv").css("visibility", "visible");
-                        }
-                    })
                 },
-
                 login:function(){
-                    /*$("#form-login").submit(function(event){
+                    $("#form-login").submit(function(event){
                         const f=$(this);
                         if(f[0].checkValidity()===false){
                             event.preventDefault();
                             event.stopPropagation();
+                            return;
                         }
-                        f.addClass("was-validated")
-                    });
-*/
-                    axios.post('mooclogin', this.bean).then(function (response) {
-                        var temp = response.data.data;
-                        this.result = response.data;
-                        if (result.code === 0) {
-                            sessionStorage.setItem('userId',temp.id);
-                            sessionStorage.setItem('username',temp.name);
-                            sessionStorage.setItem('userEmail',temp.email);
-                            location.reload();
-                        } else if(result.message!=null){
-                            $("span.errorMessage").html(result.message);
-                            $("div.loginErrorMessageDiv").css("visibility", "visible");
-                        }
+                        f.addClass("was-validated");
+                        axios.post('mooclogin', this.bean).then(function (response) {
+                            var temp = response.data.data;
+                            this.result = response.data;
+                            if (result.code === 0) {
+                                sessionStorage.setItem('userId',temp.id);
+                                sessionStorage.setItem('username',temp.name);
+                                sessionStorage.setItem('userEmail',temp.email);
+                                location.reload();
+                            } else if(result.message!=null){
+                                $("span.errorMessage").html(result.message);
+                                $("div.loginErrorMessageDiv").css("visibility", "visible");
+                            }
+                        });
                     });
                 }
             }
@@ -141,7 +141,7 @@
                     <div class="card-body">
                         <div style="width: 100%;height: 30%"></div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;音乐艺术是用有组织的音构成的听觉意象，来表达人们的思想感情与社会现实生活的一种艺术形式。任何一种艺术形式都有自己表情达意、塑造艺术意象的表现手段，比如舞蹈是通过肢体动作、面部表情，绘画是通过线条、色彩、构图，文学是通过字、词、句、篇来体现艺术意象。</p>
-                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                        <p><a class="btn btn-secondary" href="user_subject?sid=2" role="button">查看详情 &raquo;</a></p>
                     </div>
                 </div>
             </div>
