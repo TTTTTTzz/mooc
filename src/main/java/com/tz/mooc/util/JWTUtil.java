@@ -12,17 +12,18 @@ public class JWTUtil {
 
     private static final String SECRET_KEY = "f9251e38-7f92-469a-8c04-7c8d2f9a7edc";
 
-    public static String encode(String userId) {
+    public static String encode(String userId,String userPassword) {
         Integer ept = 10080;  // 一周
-        return JWTUtil.encode(userId, ept);
+        return JWTUtil.encode(userId, userPassword, ept);
     }
 
     // 加密Token
-    public static String encode(String userId, Integer exceptionTime) {
+    public static String encode(String userId, String userPassword, Integer exceptionTime) {
         Map<String, Object> claims = new HashMap<>();
         long nowMillis = System.currentTimeMillis();
         long expirationMillis = nowMillis + exceptionTime * 60000L;
         claims.put("userId", userId);
+        claims.put("userPassword",userPassword);
         return Jwts.builder()
                 .setSubject("subValue")
                 .addClaims(claims)
@@ -38,6 +39,17 @@ public class JWTUtil {
                     .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(accessToken).getBody();
             return (String) claims.get("userId");
+        } catch (Exception e) {  // 解密失败，返回null
+            return null;
+        }
+    }
+
+    public static String decodePassword(String accessToken) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(accessToken).getBody();
+            return (String) claims.get("userPassword");
         } catch (Exception e) {  // 解密失败，返回null
             return null;
         }

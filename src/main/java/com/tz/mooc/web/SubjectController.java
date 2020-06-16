@@ -38,7 +38,7 @@ public class SubjectController {
 
     @DeleteMapping("/subjects/{id}")
     public String delete(@PathVariable("id") int id, HttpServletRequest request)  throws Exception {
-        if(courseService.getBySubject(id).isPresent()){
+        if(courseService.getBySubject(id).size()!=0){
             return "-1";
         }else {
             subjectService.delete(id);

@@ -43,6 +43,7 @@
                 this.name = sessionStorage.getItem('username');
                 this.getCourse();
                 this.getVideoList();
+                this.checkCourse();
             },
 
             methods: {
@@ -76,6 +77,23 @@
                     this.bean.cid=cid;
                     axios.put(url, this.bean).then(function (response) {
                     });
+                },
+
+                addCourse:function () {
+                    var url="uc";
+                    this.bean.uid=sessionStorage.getItem('userId');
+                    this.bean.cid=cid;
+                    axios.post(url, this.bean).then(function (response) {
+
+                    });
+                },
+
+                checkCourse:function () {
+                    var url="uc/"+sessionStorage.getItem('userId')+"/"+cid;
+                    axios.get(url).then(function (response) {
+                        if(response.data !== null)
+                            $("div#addcourse").css("visibility", "hidden");
+                    });
                 }
             }
         });
@@ -95,27 +113,43 @@
             </div>
         </div>
     </div>
-
     <div class="container">
-        <div class="row">
-            <div class="col-sm-2 sidenav">
-                <ul class="nav nav-pills flex-column">
-                    <li v-for="video in videos" class="nav-item">
-                        <a class="nav-link text-secondary" href="#" @click="changeVideoAddress(video.address,video.course.id)">{{video.name}}</a>
-                    </li>
-                </ul>
+        <nav>
+            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">课程介绍</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">课程内容</a>
             </div>
-            <div class="col-sm-10">
-                <div>
-                    <video id="myVideo" controls="" style="width :100%;height:100%;object-fit:fill">
-                        <source id="address" type="video/mp4">
-                    </video>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div style="margin-left: 180px;margin-right: 180px" class="mt-4">
+                    <p>{{course.description}}</p>
+                    <div id="addcourse" style="visibility: visible">
+                        <button class="btn btn-outline-info" @click="addCourse" role="button">加入课程</button>
+                    </div>
+                </div>
+                <hr class="mt-lg-3">
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="row mt-4">
+                    <div class="col-sm-2 sidenav">
+                        <ul class="nav nav-pills flex-column">
+                            <li v-for="video in videos" class="nav-item">
+                                <a class="nav-link text-secondary" href="#" @click="changeVideoAddress(video.address,video.course.id)">{{video.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <div>
+                            <video id="myVideo" controls="" style="width :100%;height:100%;object-fit:fill">
+                                <source id="address" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-    </div> <!-- /container -->
+    </div>
 
 </main>
 </body>

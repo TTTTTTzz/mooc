@@ -28,22 +28,20 @@ public class HomeRESTController { //后台管理的登陆
 
     @PostMapping("/homelogin")
     public Object login(@RequestBody User bean, HttpSession session) {
-        String email = bean.getEmail();
-        email = HtmlUtils.htmlEscape(email);
-        Subject subject = SecurityUtils.getSubject();
-        //UsernamePasswordToken token = new UsernamePasswordToken(email, bean.getPassword());
-        AuthenticationToken token = new JwtToken(JWTUtil.encode(String.valueOf(bean.getId()),bean.getPassword()));
+        if (userService.getSaltByEmail(bean.getEmail()) == null) {
+            String message = "账号不存在，请注册";
+            return Result.fail(message);
+        }
+        bean.setPassword(UserUtil.getInputPasswordCiph(bean.getPassword(), userService.getSaltByEmail(bean.getEmail())));
         try {
-            subject.login(token);
+            UserUtil.userLogin(bean);
             //成功登陆 //todo test 不存在的账号
-            User user = userService.getByEmail(email);
-            User temp = new User();
-            temp.setEmail(user.getEmail());
-            temp.setName(user.getName());
-            temp.setRid(user.getRid());
-            temp.setId(user.getId());
-            session.setAttribute("token", token); //todo
-            return Result.success(temp);
+            User user = new User();
+            user.setId(userService.getByEmail(bean.getEmail()).getId());
+            user.setName(userService.getByEmail(bean.getEmail()).getName());
+            user.setRid(userService.getByEmail(bean.getEmail()).getRid());
+            user.setEmail(bean.getEmail());
+            return Result.success(user);
         } catch (AuthenticationException e) {
             String message = "账号密码错误";
             return Result.fail(message);
@@ -78,17 +76,33 @@ public class HomeRESTController { //后台管理的登陆
 
     @PostMapping("/moocRegister")
     public Object moocRegister(@RequestBody User user, HttpSession session){
-        String password = user.getPassword();
+        if(user.getEmail().equals("")){
+            String message = "请输入注册邮箱！";
+            return Result.fail(message);
+        }
+        else if(user.getPassword().equals("")){
+            String message = "请输入密码！";
+            return Result.fail(message);
+        }
+        else if(user.getName().equals("")){
+            String message = "请输入用户名！";
+            return Result.fail(message);
+        }
+        else {
+            //todo 邮箱已注册
+            String password = user.getPassword();
 
-        String[] saltAndCiphertext = UserUtil.encryptPassword(password);
+            String[] saltAndCiphertext = UserUtil.encryptPassword(password);
 
-        user.setSalt(saltAndCiphertext[0]);
-        user.setPassword(saltAndCiphertext[1]);
-        user.setRid(3);
+            user.setSalt(saltAndCiphertext[0]);
+            user.setPassword(saltAndCiphertext[1]);
+            user.setRid(3);
 
-        userService.userRegister(user);
+            userService.userRegister(user);
 
-        return moocLogin(user, session); //使用户沆注册后立马登录
+            return moocLogin(user, session); //使用户沆注册后立马登录
+        }
+
     }
 
     @GetMapping("/moocLogout")

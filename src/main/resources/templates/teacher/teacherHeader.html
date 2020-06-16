@@ -17,6 +17,14 @@
             $(id).removeClass("text-secondary").addClass('text-white bg-success');
         }
 
+        //无弹窗
+        function checkIsEmptyWithNoAlert(value){
+            if(null==value){
+                return true;
+            }
+            return false;
+        }
+
         //判断是否为空
         function checkEmpty(value,text){
 

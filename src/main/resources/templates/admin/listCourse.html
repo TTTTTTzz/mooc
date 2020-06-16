@@ -165,6 +165,12 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td>课程描述</td>
+                            <td><input @keyup.enter="add" v-model.trim="bean.description" type="text" class="form-control"
+                                       placeholder="" style="height: 100px;">
+                            </td>
+                        </tr>
                         <tr class="submitTR">
                             <td colspan="2" align="center">
                                 <a href="#nowhere" @click="add" class="btn btn-outline-warning">提交</a>

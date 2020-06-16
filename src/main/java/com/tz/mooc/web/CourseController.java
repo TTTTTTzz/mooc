@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +21,11 @@ public class CourseController {
         start = start<0?0:start;
         Page4Navigator<Course> page =courseService.list(sid, start, size,5);
         return page;
+    }
+
+    @GetMapping("/subject/{sid}/courses")
+    public List<Course> list(@PathVariable("sid") int sid){
+        return courseService.getBySubject(sid);
     }
 
     @GetMapping("courses/all")

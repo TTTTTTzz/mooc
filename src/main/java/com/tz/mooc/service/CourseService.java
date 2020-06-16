@@ -34,7 +34,7 @@ public class CourseService {
         return courseDAO.findById(id);
     }
 
-    public Optional<Course> getBySubject(int sid){return courseDAO.findAllBySubject(subjectService.get(sid).get());}
+    public List<Course> getBySubject(int sid){return courseDAO.findAllBySubject(subjectService.get(sid).get());}
 
     public void update(Course bean){
         courseDAO.save(bean);

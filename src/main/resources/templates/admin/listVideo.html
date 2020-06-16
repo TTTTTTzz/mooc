@@ -81,7 +81,6 @@
                         <th>ID</th>
                         <th>视频名称</th>
                         <th>播放</th>
-                        <th>删除</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,9 +91,6 @@
                         </td>
                         <td>
                             <a type="button" data-toggle="modal" data-target="#myModal" href="#nowhere" @click="changeVideoAddress(bean.address)"><span class="fa fa-play"></span></a>
-                        </td>
-                        <td>
-                            <a href="#nowhere" @click="deleteBean(bean.id)"><span class="fa fa-trash"></span></a>
                         </td>
                     </tr>
                     </tbody>

@@ -54,40 +54,42 @@
                             return;
                         }
                         f.addClass("was-validated");
+                    });
+                    if(this.user.password === this.user.repeatpassword){
                         axios.post('moocRegister', this.user).then(function (response) {
+                            var temp = response.data.data;
                             var result = response.data;
                             if (result.code === 0) {
-
+                                sessionStorage.setItem('userId', temp.id);
+                                sessionStorage.setItem('username', temp.name);
+                                sessionStorage.setItem('userEmail', temp.email);
+                                $("#form-register").modal('hide');
+                                location.href = "/user_home";
                             } else {
                                 $("span.errorMessage4register").html(result.message);
                                 $("div.registerErrorMessageDiv").css("visibility", "visible");
                             }
                         });
-                    });
+                    }
+
                 },
-                login:function(){
-                    $("#form-login").submit(function(event){
-                        const f=$(this);
-                        if(f[0].checkValidity()===false){
-                            event.preventDefault();
-                            event.stopPropagation();
-                            return;
-                        }
-                        f.addClass("was-validated");
+                login: function () {
+                    if(this.bean.email !== "" && this.bean.password !== ""){
                         axios.post('mooclogin', this.bean).then(function (response) {
                             var temp = response.data.data;
                             this.result = response.data;
                             if (result.code === 0) {
-                                sessionStorage.setItem('userId',temp.id);
-                                sessionStorage.setItem('username',temp.name);
-                                sessionStorage.setItem('userEmail',temp.email);
+                                sessionStorage.setItem('userId', temp.id);
+                                sessionStorage.setItem('username', temp.name);
+                                sessionStorage.setItem('userEmail', temp.email);
                                 location.reload();
-                            } else if(result.message!=null){
+                            } else if (result.message != null) {
                                 $("span.errorMessage").html(result.message);
                                 $("div.loginErrorMessageDiv").css("visibility", "visible");
                             }
                         });
-                    });
+                    }
+
                 }
             }
         });
@@ -114,8 +116,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
     <div class="container row" id="workingArea">
-        <div th:replace="include/plugin/loginModal::html"></div>
-        <div th:replace="include/plugin/registerModal::html"></div>
+        <div><div th:replace="include/plugin/loginModal::html"></div></div>
+        <div><div th:replace="include/plugin/registerModal::html"></div></div>
         <div class="col-2"></div>
         <div class="col-7">
             <br>
@@ -151,7 +153,7 @@
                     <div class="card-body">
                         <div style="width: 100%;height: 30%"></div>
                         <p>计算机科学是一门包含各种各样与计算和信息处理相关主题的系统学科，从抽象的算法分析、形式化语法等等，到更具体的主题如编程语言、程序设计、软件和硬件等。</p>
-                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                        <p><a class="btn btn-secondary" href="user_subject?sid=4" role="button">查看详情 &raquo;</a></p>
                     </div>
                 </div>
             </div>
@@ -161,7 +163,7 @@
                     <div class="card-body">
                         <div style="width: 100%;height: 30%"></div>
                         <p>是对基本和普遍之问题的研究的学科，是关于世界观的理论体系。世界观是关于世界的本质、发展的根本规律、人的思维与存在的根本关系的等普遍基本问题的总体认识，方法论是人类根据世界观形成的认识世界的方法。</p>
-                        <p><a class="btn btn-secondary" href="#" role="button">查看详情 &raquo;</a></p>
+                        <p><a class="btn btn-secondary" href="user_subject?sid=5" role="button">查看详情 &raquo;</a></p>
                     </div>
                 </div>
             </div>

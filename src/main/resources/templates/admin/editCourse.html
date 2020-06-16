@@ -95,6 +95,12 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td>课程描述</td>
+                            <td><textarea  @keyup.enter="add" v-model.trim="bean.description" type="text" class="form-control"
+                                       placeholder="" style="height: 100px;">
+                            </td>
+                        </tr>
                         <tr class="submitTR">
                             <td colspan="2" align="center">
                                 <input type="hidden" name="id" v-model.trim="bean.id">

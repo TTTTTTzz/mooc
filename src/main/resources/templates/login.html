@@ -40,7 +40,7 @@
             },
             methods: {
                 login: function () {
-                    axios.post('mooclogin', this.bean).then(function (response) {
+                    axios.post('homelogin', this.bean).then(function (response) {
                         var result = response.data;
                         var temp = response.data.data;
                         if (temp.rid == 1) {

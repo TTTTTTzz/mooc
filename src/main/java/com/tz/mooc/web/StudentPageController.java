@@ -16,4 +16,7 @@ public class StudentPageController {
     @GetMapping(value = "/user_setting")
     public String setting(){return "student/userProfile";}
 
+    @GetMapping(value = "/user_subject")
+    public String oneSubject(){return "student/oneSubject";}
+
 }

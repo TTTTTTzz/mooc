@@ -11,6 +11,15 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>
+        /*change courseList in stu_nav*/
+        function changeCourseList(){
+
+            var para=document.createElement("p");//创建需要增加的元素节点
+            var node=document.createTextNode("这是新段落。");//创建文本节点
+
+            $("#courseList").append(node);
+        }
+
         /* change the active nav-tab*/
         function changeNav(id) {
             $(".nav a").removeClass("text-white bg-success").addClass("text-secondary");//this will remove the active class from previously active menu item

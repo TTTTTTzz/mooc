@@ -35,6 +35,17 @@ public class UserCourseController {
         return bean;
     }
 
+    @PostMapping("uc")
+    public Object add(@RequestBody UserCourse bean) throws Exception {
+        userCourseService.add(bean);
+        return bean;
+    }
+
+    @GetMapping("uc/{uid}/{cid}")
+    public Object check(@PathVariable("uid") int uid,@PathVariable("cid") int cid){
+        return userCourseService.getByUserAndCourse(uid,cid);
+    }
+
 
 
 }

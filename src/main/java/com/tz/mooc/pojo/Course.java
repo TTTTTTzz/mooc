@@ -48,4 +48,13 @@ public class Course {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Column(name = "description")
+    private String description;
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
